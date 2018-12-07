@@ -4,33 +4,30 @@ import loading from '../components/loading'
 
 
 const Home = Loadable({
-	loader: () => import("../pages/home"),
+	loader: () => import("../pages/home/index"),
 	loading: loading
 });
 const About = Loadable({
-	loader: () => import("../pages/about"),
+	loader: () => import("../pages/about/index"),
 	loading: loading
 });
-const Hi = Loadable({
-	loader: () => import("../pages/hi"),
+const Classify = Loadable({
+	loader: () => import("../pages/classify/index"),
 	loading: loading
 });
 
 export const routes = [
 	{
-		path: '/',
+		path: '/home',
 		component: Home,
 		exact: true
 	},
 	{
 		path: '/about',
 		component: About,
-		// routes: [
-		//
-		// ]
 	},
 	{
-		path: '/about/hi',
-		component: Hi
+		path: '/Classify',
+		component: Classify
 	}
 ]

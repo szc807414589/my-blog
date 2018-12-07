@@ -1,26 +1,26 @@
 import React, {Component} from 'react'
 import {Button} from 'antd'
 
-class Hi extends Component {
+class Index extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {}
 		this.goHome = this.goHome.bind(this)
 	}
 	
 	goHome() {
-		this.props.history.push('/')
+		this.props.history.push('/classify')
 	}
 	
 	render() {
-		
 		return (
 			<div>
-				<h2>Hi Hi Hi...</h2>
-				<Button onClick={this.goHome} type="danger">Danger</Button>
+				<h2>this is about</h2>
+				<Button onClick={this.goHome} type="danger">hi</Button>
 			</div>
 		
 		)
 	}
 }
 
-export default Hi
+export default Index
