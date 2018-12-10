@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button} from 'antd';
 import './header.less'
 import history from '../../history'
-import {withRouter} from 'react-router-dom'
 
 
 const menu = (
@@ -81,9 +80,9 @@ class HeaderBar extends Component {
 							trigger={['click']}
 							visible={this.state.visible}
 						>
-							<a className="ant-dropdown-link">
+							<span className="ant-dropdown-link">
 								Click me <Icon type="down"/>
-							</a>
+							</span>
 						</Dropdown>
 					</div>
 					{/*发表文章
@@ -96,4 +95,4 @@ class HeaderBar extends Component {
 	}
 }
 
-export default withRouter(HeaderBar)
+export default HeaderBar

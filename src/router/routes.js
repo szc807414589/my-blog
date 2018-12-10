@@ -15,19 +15,29 @@ const Classify = Loadable({
 	loader: () => import("../pages/classify/index"),
 	loading: loading
 });
+// const Login = Loadable({
+// 	loader: () => import("../pages/login/index"),
+// 	loading: loading
+// });
 
 export const routes = [
 	{
-		path: '/home',
-		component: Home,
-		exact: true
+		component:Home,
+		routes:[
+			{
+				path: '/home',
+				component: Home,
+				exact: true
+			},
+			{
+				path: '/about',
+				component: About,
+			},
+			{
+				path: '/Classify',
+				component: Classify
+			}
+		]
 	},
-	{
-		path: '/about',
-		component: About,
-	},
-	{
-		path: '/Classify',
-		component: Classify
-	}
+	
 ]
