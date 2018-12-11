@@ -13,7 +13,9 @@ const menu = (
 		<Menu.Divider/>
 		<Menu.Item key="1">
 			<Breadcrumb>
-				<Switch checkedChildren="CH" unCheckedChildren="EN" defaultChecked/>
+				<Breadcrumb className="Item">
+					<Switch checkedChildren="CH" unCheckedChildren="EN" defaultChecked/>
+				</Breadcrumb>
 			</Breadcrumb>
 		</Menu.Item>
 	</Menu>
@@ -31,7 +33,6 @@ class HeaderBar extends Component {
 	}
 	
 	componentWillMount() {
-		console.log(history)
 	}
 	
 	handleVisibleChange(flag) {
@@ -58,7 +59,7 @@ class HeaderBar extends Component {
 						defaultSelectedKeys={['home']}
 						mode="horizontal"
 					>
-						<Menu.Item key="/home">
+						<Menu.Item key="/">
 							<Icon type="smile" theme="twoTone"/>首页
 						</Menu.Item>
 						<Menu.Item key="/classify">

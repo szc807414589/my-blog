@@ -1,8 +1,29 @@
-let isLogin = false
-const LOG_IN = 'LOG_IN'
-const LOG_OUT = 'LOG_OUT'
+let nextTodoId = 0
+const ADD_TODO = 'ADD_TODO'
+const TOOGLE_TODO = 'TOOGLE_TODO'
+const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
-export const user_login = uname => ({type:LOG_IN,uname})
-export const user_logout = uname => ({type:LOG_OUT,uname})
+export const VisibilityFilters = {
+	SHOW_ALL: 'SHOW_ALL',
+	SHOW_COMPLETED: 'SHOW_COMPLETED',
+	SHOW_ACTIVE: 'SHOW_ACTIVE'
+}
 
+export const addTodo = text => ({
+	type: ADD_TODO,
+	id: nextTodoId++,
+	text
+})
 
+export const toogleTodo = id => ({
+	type: TOOGLE_TODO,
+	id
+})
+
+export const setVisibilityFilter = filter => {
+	console.log(filter)
+	return {
+		type: SET_VISIBILITY_FILTER,
+		filter
+	}
+}
