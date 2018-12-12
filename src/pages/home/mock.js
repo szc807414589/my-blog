@@ -12,7 +12,7 @@ let Random = Mock.Random
 	* likes 点赞
 	* */
 let listItem = Mock.mock({
-	'array|1-10': [
+	'array|20': [
 		{
 			'title': Random.title(),
 			'content':Random.paragraph( 1, 10 ),
