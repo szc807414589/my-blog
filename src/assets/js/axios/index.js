@@ -4,7 +4,7 @@ import {message} from 'antd';
 import NProgress from 'nprogress/nprogress'
 import 'nprogress/nprogress.css'
 
-axios.defaults.baseURL = '/opengt';
+// axios.defaults.baseURL = '/opengt';
 //请求拦截器
 axios.interceptors.request.use(config => {
 	NProgress.start()
@@ -36,28 +36,12 @@ axios.interceptors.response.use(response => {
 })
 
 export const postApi = (url, data, errCb) => {
-	data = qs.stringify({Data: JSON.stringify({...data})})
 	return axios.post(url, data)
 		.then(res => {
 			NProgress.done()
 			return Promise.resolve(res)
 		}, err => {
 			NProgress.done()
-			errCb ? errCb() : message.error('出现了意料之外的错误')
-			return Promise.reject(err)
-		})
-}
-export const postApiCode = (url, data, errCb) => {
-	let params = {data: data}
-	return axios({
-		method: 'post',
-		url,
-		params: params,
-		data
-	})
-		.then(res => {
-			return Promise.resolve(res)
-		}, err => {
 			errCb ? errCb() : message.error('出现了意料之外的错误')
 			return Promise.reject(err)
 		})

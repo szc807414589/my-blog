@@ -4,19 +4,27 @@ import App from './router'
 // import {Router} from 'react-router-dom'
 // import history from './history'
 import rootReducer from './redux/reducers'
-import {createStore,applyMiddleware } from 'redux'
+import {createStore,applyMiddleware,compose} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { helloSaga } from './redux/sagas'
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+// 利用redux-logger打印日志
+import {createLogger} from 'redux-logger'
 import './index.css';
 import './assets/css/reset.less'
 import * as serviceWorker from './serviceWorker';
 
-
+let redux_devTool = window.devToolsExtension ?
+	window.devToolsExtension():
+	f => f
 const store = createStore(
 	rootReducer,
-	applyMiddleware(createSagaMiddleware(helloSaga)),
+	redux_devTool
 )
+
+console.log(store.getState())
+
 ReactDOM.render(
 	<Provider store={store}>
 		<App/>

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Loadable from "react-loadable"
 import loading from '../components/loading'
-// import {renderRoutes} from "react-router-config"
 import renderRoutes from '../assets/js/utils/renderRoutes'
 import HeaderBar from '../components/header'
 import Content from '../components/content'
@@ -23,10 +22,16 @@ const Login = Loadable({
 	loader: () => import("../pages/login/index"),
 	loading: loading
 });
+const Register = Loadable({
+	loader: () => import("../pages/register/index"),
+	loading: loading
+});
 const Detail = Loadable({
 	loader: () => import("../pages/detail/index"),
 	loading: loading
 });
+
+
 class RouterModal extends Component {
 	constructor(props){
 		super(props)
@@ -47,6 +52,11 @@ export const routes = [
 	{
 		path: '/login',
 		component: Login,
+		requiresAuth: false
+	},
+	{
+		path: '/register',
+		component: Register,
 		requiresAuth: false
 	},
 	{

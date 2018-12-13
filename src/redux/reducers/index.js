@@ -26,8 +26,18 @@ const todos = (state = [], action) => {
 const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
 	switch (action.type) {
 		case 'SET_VISIBILITY_FILTER':
-			console.log(action)
 			return action.filter
+		default:
+			return state
+	}
+}
+
+const auth = (state = {user: 'xixixi', isAuth: false}, action) => {
+	switch (action.type) {
+		case 'LOGIN':
+			return {...state, isAuth: true}
+		case 'LOGOUT':
+			return {...state, isAuth: false}
 		default:
 			return state
 	}
@@ -35,5 +45,6 @@ const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
 
 export default combineReducers({
 	todos,
-	visibilityFilter
+	visibilityFilter,
+	auth
 })

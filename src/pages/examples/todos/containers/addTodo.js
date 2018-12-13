@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addTodo} from "../../../../redux/actions"
-import {Input,Button,Form} from 'antd'
 
 const AddTodo = ({dispatch}) => {
 	let input

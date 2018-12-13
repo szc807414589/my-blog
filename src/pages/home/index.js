@@ -22,25 +22,31 @@ class Home extends Component {
 			hasMore: true,
 			listData: []
 		}
-		this.getbanner = this.getbanner.bind(this)
+		// this.getbanner = this.getbanner.bind(this)
 		this.getList = this.getList.bind(this)
 	}
 	
 	componentDidMount() {
-		this.getbanner()
+		// this.getbanner()
 		this.getList()
+		this.getCode()
 	}
 	
-	getbanner() {
-		postApi(api.Channel, {
-			applyType: 'VasBusinessCenter'
-		})
+	// getbanner() {
+	// 	postApi(api.Channel, {
+	// 		applyType: 'VasBusinessCenter'
+	// 	})
+	// 		.then(res => {
+	// 			let bannerList = res.plateInfo[0].items
+	// 			this.setState({bannerList})
+	// 		})
+	// }
+	getCode(){
+		getApi('/user/info')
 			.then(res => {
-				let bannerList = res.plateInfo[0].items
-				this.setState({bannerList})
+				console.log(res)
 			})
 	}
-	
 	getList() {
 		getApi('./json/mock.json')
 			.then(res => {
@@ -121,13 +127,17 @@ class Home extends Component {
 						</div>
 						{/*banner*/}
 						<Carousel autoplay>
-							{
-								this.state.bannerList.map((k, v) => (
-									<div key={v}>
-										<img src={k.imgUrl} alt=""/>
-									</div>
-								))
-							}
+							{/*{*/}
+								{/*this.state.bannerList.map((k, v) => (*/}
+									{/*<div key={v}>*/}
+										{/*<img src={k.imgUrl} alt=""/>*/}
+									{/*</div>*/}
+								{/*))*/}
+							{/*}*/}
+							<div> <h1>1</h1></div>
+							<div> <h1>2</h1></div>
+							<div> <h1>3</h1></div>
+							<div> <h1>4</h1></div>
 						</Carousel>
 						{/*友情链接*/}
 					</Col>
