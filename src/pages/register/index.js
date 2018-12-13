@@ -12,9 +12,9 @@ class RegisgerPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			userName: '',
-			password: '',
-			confirmPassword: ''
+			user: '',
+			pwd: '',
+			confirmpwd: ''
 		}
 		this.handleClick = this.handleClick.bind(this)
 		this.inputChange = this.inputChange.bind(this)
@@ -22,7 +22,10 @@ class RegisgerPage extends Component {
 	
 	handleClick() {
 		console.log(this.state)
-		postApi(api.Register,this.state)
+		postApi(api.Register,{
+			user: this.state.user,
+			pwd: this.state.pwd
+		})
 			.then(res=>{
 				console.log(res)
 			})
@@ -45,31 +48,31 @@ class RegisgerPage extends Component {
 							<Input
 								prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
 								placeholder="admin"
-								name="userName"
-								autoComplete="userName"
-								value={this.state.userName}
+								name="user"
+								autoComplete="user"
+								value={this.state.user}
 								onChange={this.inputChange}
 							/>
 						</FormItem>
 						<FormItem>
 							<Input
 								prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-								type="password"
+								type="pwd"
 								placeholder="admin"
-								name="password"
-								autoComplete="password"
-								value={this.state.password}
+								name="pwd"
+								autoComplete="pwd"
+								value={this.state.pwd}
 								onChange={this.inputChange}
 							/>
 						</FormItem>
 						<FormItem>
 							<Input
 								prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-								type="password"
+								type="pwd"
 								placeholder="admin"
-								name="confirmPassword"
-								autoComplete="confirmPassword"
-								value={this.state.confirmPassword}
+								name="confirmpwd"
+								autoComplete="confirmpwd"
+								value={this.state.confirmpwd}
 								onChange={this.inputChange}
 							/>
 						</FormItem>

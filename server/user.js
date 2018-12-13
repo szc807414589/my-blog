@@ -17,25 +17,34 @@ Router.get('/info', (req, res) => {
 	return res.json({code: 1})
 })
 
-Router.post('/register', (req, res) => {
-	console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-	console.log(res)
-	console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-	console.log(req)
-	console.log("===============================")
-	console.log(req.body)
-	console.log("===============================")
-	
-	let reqData = req.body
-	const {userName, password, type} = reqData
-	User.findOne({userName}, (err, doc) => {
+// Router.post('/register', (req, res) => {
+// 	// let reqData = req.body
+// 	const {user, pwd, type} = req.body
+// 	User.findOne({user}, (err, doc) => {
+// 		if (doc) {
+// 			return res.json({code: 10001, msg: codeData[10001]})
+// 		}
+// 		User.create({user, type, pwd: md5Pwd(pwd)}, (e, d) => {
+// 			console.log(e)
+// 			if (e) {
+// 				return res.json({code: 10002, msg: codeData[10002]})
+// 			}
+// 			return res.json({code: 10000, msg: codeData[10000]})
+// 		})
+// 	})
+// })
+Router.post('/register', function(req, res){
+	const {user, pwd, type} = req.body
+	console.log(req.body);
+	User.findOne({user},function(err,doc){
 		if (doc) {
-			return res.json({code: 10001, msg: codeData[10001]})
+			return res.json({code:1,msg:'用户名重复'})
 		}
-		User.create({userName, type, password: md5Pwd(password)}, (e, d) => {
-			console.log(e)
+		const userModel = new User({user,type,pwd:md5Pwd(pwd)})
+		userModel.save(function(e,d){
+			console.log(e);
 			if (e) {
-				return res.json({code: 10002, msg: codeData[10002]})
+				return res.json({code:1,msg:'后端出错了'})
 			}
 			return res.json({code: 10000, msg: codeData[10000]})
 		})
