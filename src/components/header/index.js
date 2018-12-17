@@ -87,8 +87,8 @@ class HeaderBar extends Component {
 						</Dropdown>
 					</div>
 					{/*发表文章
-					 	  *需要登录
-					 	  * */}
+					  *需要登录
+					  * */}
 					<Button className="header_login" type="primary" ghost>登录</Button>
 				</header>
 			</div>

@@ -23,8 +23,6 @@ const store = createStore(
 	redux_devTool
 )
 
-console.log(store.getState())
-
 ReactDOM.render(
 	<Provider store={store}>
 		<App/>

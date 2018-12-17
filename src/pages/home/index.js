@@ -22,27 +22,15 @@ class Home extends Component {
 			hasMore: true,
 			listData: []
 		}
-		// this.getbanner = this.getbanner.bind(this)
 		this.getList = this.getList.bind(this)
 	}
 	
 	componentDidMount() {
-		// this.getbanner()
 		this.getList()
 		this.getCode()
 	}
-	
-	// getbanner() {
-	// 	postApi(api.Channel, {
-	// 		applyType: 'VasBusinessCenter'
-	// 	})
-	// 		.then(res => {
-	// 			let bannerList = res.plateInfo[0].items
-	// 			this.setState({bannerList})
-	// 		})
-	// }
 	getCode(){
-		getApi('/user/info')
+		postApi('/user/userInfo',{})
 			.then(res => {
 				console.log(res)
 			})
@@ -50,11 +38,13 @@ class Home extends Component {
 	getList() {
 		getApi('./json/mock.json')
 			.then(res => {
-				let listData = this.state.listData.concat(res)
-				this.setState({
-					listData,
-					loading: false
-				})
+				if(res){
+					let listData = this.state.listData.concat(res)
+					this.setState({
+						listData,
+						loading: false
+					})
+				}
 			})
 	}
 	

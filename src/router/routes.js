@@ -41,7 +41,7 @@ class RouterModal extends Component {
 			<div>
 				<HeaderBar/>
 				<Content>
-					{renderRoutes(routes[1].routes)}
+					{renderRoutes(routes[2].routes)}
 				</Content>
 			</div>
 		)

@@ -1,9 +1,7 @@
-import React, {Component} from 'react'
-import {Input, Icon, Button, Form, Checkbox,} from 'antd'
-import {postApi} from '../../assets/js/axios'
+import React, { Component } from 'react'
+import { Input, Icon, Button, Form, message } from 'antd'
+import { postApi } from '../../assets/js/axios'
 import api from '../../assets/js/axios/api'
-import {connect} from 'react-redux'
-import {login, logout} from '../../redux/actions'
 import './register.less'
 
 const FormItem = Form.Item;
@@ -14,20 +12,30 @@ class RegisgerPage extends Component {
 		this.state = {
 			user: '',
 			pwd: '',
-			confirmpwd: ''
+			confirmPwd: ''
 		}
 		this.handleClick = this.handleClick.bind(this)
 		this.inputChange = this.inputChange.bind(this)
 	}
 	
 	handleClick() {
-		console.log(this.state)
-		postApi(api.Register,{
-			user: this.state.user,
-			pwd: this.state.pwd
+		const { user, pwd, confirmPwd } = this.state
+		if (!user || !pwd || !confirmPwd) {
+			message.error('请输入正确信息')
+			return
+		}
+		if (pwd !== confirmPwd) {
+			message.error('两次密码输入不一致')
+			return
+		}
+		postApi(api.Register, {
+			user,
+			pwd
 		})
-			.then(res=>{
-				console.log(res)
+			.then(res => {
+				if (res.code === 10000) {
+					this.props.history.push('/')
+				}
 			})
 	}
 	
@@ -39,15 +47,20 @@ class RegisgerPage extends Component {
 	}
 	
 	render() {
-		// console.log(this.props)
 		return (
 			<div className="login_container">
 				<div className="login_Box">
 					<Form className="login-form">
 						<FormItem>
 							<Input
-								prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-								placeholder="admin"
+								prefix={
+									<Icon
+										type="user"
+										style={{
+											color: 'rgba(0,0,0,.25)'
+										}}/>
+								}
+								placeholder="user name"
 								name="user"
 								autoComplete="user"
 								value={this.state.user}
@@ -56,9 +69,14 @@ class RegisgerPage extends Component {
 						</FormItem>
 						<FormItem>
 							<Input
-								prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-								type="pwd"
-								placeholder="admin"
+								prefix={
+									<Icon
+										type="lock"
+										style={{
+											color: 'rgba(0,0,0,.25)'
+										}}/>}
+								type="password"
+								placeholder="password"
 								name="pwd"
 								autoComplete="pwd"
 								value={this.state.pwd}
@@ -67,12 +85,19 @@ class RegisgerPage extends Component {
 						</FormItem>
 						<FormItem>
 							<Input
-								prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-								type="pwd"
-								placeholder="admin"
-								name="confirmpwd"
-								autoComplete="confirmpwd"
-								value={this.state.confirmpwd}
+								prefix={
+									<Icon
+										type="lock"
+										style={{
+											color: 'rgba(0,0,0,.25)' +
+											''
+										}}/>
+								}
+								type="password"
+								placeholder="password again"
+								name="confirmPwd"
+								autoComplete="confirmPwd"
+								value={this.state.confirmPwd}
 								onChange={this.inputChange}
 							/>
 						</FormItem>
@@ -91,6 +116,9 @@ class RegisgerPage extends Component {
 								block
 								type="primary"
 								className="login-form-button"
+								onClick={() => {
+									this.props.history.push('/login')
+								}}
 							>
 								go login
 							</Button>
@@ -101,5 +129,5 @@ class RegisgerPage extends Component {
 		)
 	}
 }
+
 export default RegisgerPage
-// export default connect(mapStateToProps, {login, logout})(RegisgerPage)
