@@ -30,7 +30,7 @@ class Home extends Component {
 		this.getCode()
 	}
 	getCode(){
-		postApi('/routers/userInfo',{})
+		postApi('/user/userInfo',{})
 			.then(res => {
 				console.log(res)
 			})

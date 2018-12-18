@@ -29,6 +29,7 @@ class LoginPage extends Component {
 			pwd
 		})
 			.then(res => {
+				console.log(res);
 				if(res.code === 10000){
 					this.props.history.push('/')
 				}

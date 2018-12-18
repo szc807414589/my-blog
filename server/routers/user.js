@@ -9,6 +9,11 @@ const _filter = { 'pwd': 0, __v: 0 }
 //md5加密
 
 class user extends BaseComponent{
+	constructor(){
+		super()
+		this.login = this.login.bind(this)
+		this.register = this.register.bind(this)
+	}
 	list(req, res) {
 		User.find({}, (err, doc) => {
 			return res.json(doc)
@@ -31,16 +36,16 @@ class user extends BaseComponent{
 	
 	register(req, res) {
 		let userId
-		try{
-			userId = this.getId('userId');
-		}catch(err){
-			console.log('获取用户id失败');
-			res.json({
-				type: 'ERROR_DATA',
-				message: '获取数据失败'
-			})
-			return
-		}
+		// try{
+			userId = this.getId('userId')
+		// }catch(err){
+		// 	console.log('获取用户id失败')
+		// 	res.json({
+		// 		type: 'ERROR_DATA',
+		// 		message: '获取数据失败'
+		// 	})
+		// 	return
+		// }
 		const { user, pwd } = req.body
 		User.findOne({ user }, function (err, doc) {
 			if (doc) {
