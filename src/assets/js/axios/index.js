@@ -4,6 +4,7 @@ import NProgress from 'nprogress/nprogress'
 import 'nprogress/nprogress.css'
 import history from '../../../history'
 
+axios.defaults.baseURL = '/v1'
 //请求拦截器
 axios.interceptors.request.use(config => {
 	NProgress.start()
