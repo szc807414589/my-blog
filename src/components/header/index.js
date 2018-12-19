@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
-import {Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button} from 'antd';
+import React, { Component } from 'react'
+import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button ,Avatar} from 'antd';
 import './header.less'
 import history from '../../history'
+import { postApi } from "../../assets/js/axios"
 
 
 const menu = (
@@ -26,17 +27,21 @@ class HeaderBar extends Component {
 		super(props)
 		this.state = {
 			visible: false,
-			current: 'home'
+			current: 'home',
+			isLogin: false,
+			userInfo:{}
 		}
 		this.handleVisibleChange = this.handleVisibleChange.bind(this)
 		this.handleClick = this.handleClick.bind(this)
+		this.getUserInfo = this.getUserInfo.bind(this)
 	}
 	
-	componentWillMount() {
+	componentDidMount() {
+		this.getUserInfo()
 	}
 	
 	handleVisibleChange(flag) {
-		this.setState({visible: flag})
+		this.setState({ visible: flag })
 	}
 	
 	handleClick = (e) => {
@@ -45,6 +50,23 @@ class HeaderBar extends Component {
 		}, () => {
 			history.push(`${e.key}`)
 		});
+	}
+	
+	getUserInfo() {
+		postApi('/user/userInfo', {})
+			.then(res => {
+				console.log(res)
+				if (res.msg === 'success') {
+					this.setState({
+						isLogin: true,
+						userInfo: res.data
+					})
+				} else {
+					this.setState({
+						isLogin: false
+					})
+				}
+			})
 	}
 	
 	render() {
@@ -81,7 +103,10 @@ class HeaderBar extends Component {
 							trigger={['click']}
 							visible={this.state.visible}
 						>
-							<span className="ant-dropdown-link">
+							<span
+								className="ant-dropdown-link"
+								style={{ cursor: 'pointer' }}
+							>
 								Click me <Icon type="down"/>
 							</span>
 						</Dropdown>
@@ -89,7 +114,17 @@ class HeaderBar extends Component {
 					{/*发表文章
 					  *需要登录
 					  * */}
-					<Button className="header_login" type="primary" ghost>登录</Button>
+					{
+						this.state.isLogin ?
+							<Avatar
+								src={
+									this.state.userInfo.userAvatar?
+									this.state.userInfo.userAvatar:
+									'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+								}
+							/> :
+							<Button className="header_login" type="primary" ghost>登录</Button>
+					}
 				</header>
 			</div>
 		)

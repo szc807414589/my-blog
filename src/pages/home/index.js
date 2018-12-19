@@ -27,24 +27,23 @@ class Home extends Component {
 	
 	componentDidMount() {
 		this.getList()
-		this.getCode()
 	}
-	getCode(){
-		postApi('/user/userInfo',{})
+	addArticle(){
+		postApi(api.addArticle,{})
 			.then(res => {
 				console.log(res)
 			})
 	}
 	getList() {
-		getApi('./json/mock.json')
+		postApi(api.GetArticleList,{})
 			.then(res => {
-				if(res){
-					let listData = this.state.listData.concat(res)
+				if(res.msg === 'success'){
+					const data = res.data
 					this.setState({
-						listData,
-						loading: false
+						listData:data
 					})
 				}
+				
 			})
 	}
 	
@@ -62,19 +61,19 @@ class Home extends Component {
 								style={{width: '700px'}}
 								renderItem={item => (
 									<List.Item
-										key={item.title}
+										key={item.articleTitle}
 										actions={[
-											<IconText type="star-o" text={item.collection}/>,
-											<IconText type="like-o" text={item.likes}/>,
-											<IconText type="message" text={item.comment}/>
+											<IconText type="star-o" text={item.articleCollectedNumber}/>,
+											<IconText type="like-o" text={item.articleSupportedNumber}/>,
+											<IconText type="message" text={item.articleCommentNumber}/>
 										]}
 										extra={<img width={272}
 										            alt="logo"
 										            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>}
 									>
 										<List.Item.Meta
-											title={<a href={item.href}>{item.title}</a>}
-											description={item.desc}
+											title={<a href={item.href}>{item.articleTitle}</a>}
+											description={item.articleDesc}
 										/>
 									</List.Item>
 								)}
@@ -93,7 +92,7 @@ class Home extends Component {
 							style={{width: 240}}
 							actions={[
 								<Icon type="setting"/>,
-								<Icon type="edit"/>,
+								<Icon type="edit" onClick={this.addArticle}/>,
 								<Icon type="ellipsis"/>
 							]}
 						>
