@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import Loadable from "react-loadable"
 import loading from '../components/loading'
-import renderRoutes from '../assets/js/utils/renderRoutes'
-// import HeaderBar from '../components/header'
-// import Content from '../components/content'
+// import renderRoutes from '../assets/js/utils/renderRoutes'
+import {renderRoutes} from 'react-router-config'
+import HeaderBar from '../components/header'
+import Content from '../components/content'
 
-const HeaderBar = Loadable({
-	loader: () => import("../components/header"),
-	loading: loading
-});
-const Content = Loadable({
-	loader: () => import("../components/content"),
-	loading: loading
-});
+// const HeaderBar = Loadable({
+// 	loader: () => import("../components/header"),
+// 	loading: loading
+// });
+// const Content = Loadable({
+// 	loader: () => import("../components/content"),
+// 	loading: loading
+// });
 const Home = Loadable({
-	loader: () => import("../pages/home"),
+	loader: () => import("../pages/home/index"),
 	loading: loading
 });
 const About = Loadable({
-	loader: () => import("../pages/about"),
+	loader: () => import("../pages/about/index"),
 	loading: loading
 });
 const Classify = Loadable({
@@ -73,8 +74,10 @@ class SettingsRoute extends Component{
 		console.log(settings.routes)
 		return(
 			<div>
-				<Settings/>
-				{/*{renderRoutes(settings)}*/}
+				<Settings>
+				
+				{renderRoutes(settings.routes)}
+				</Settings>
 			</div>
 		)
 	}
@@ -82,7 +85,7 @@ class SettingsRoute extends Component{
 
 
 
-export const routes = [
+ const routes = [
 	{
 		path: '/login',
 		component: Login,
@@ -132,3 +135,4 @@ export const routes = [
 		]
 	}
 ]
+export default routes

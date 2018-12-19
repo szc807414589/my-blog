@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {renderRoutes} from 'react-router-config'
 import './content.less'
 
 class Content extends Component {
@@ -8,9 +9,12 @@ class Content extends Component {
 	}
 	
 	render() {
+		console.log(this.props.route);
 		return (
 			<section>
 				{this.props.children}
+				{/*{renderRoutes(this.props.children)}*/}
+			
 			</section>
 		)
 	}
