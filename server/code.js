@@ -11,15 +11,8 @@ const UserInfo = {
 	userId: '100001',
 	userDesc: 'xixixi',//用户描述
 	userAvatar: 'www.baidu.com',//用户头像链接
-	userArticle: [//用户文章
-		{
-			title: '标题',
-			description: '描述',
-			content: '文章内容',//富文本 图文
-			creatTime: '2018-11-11',
-			supported: 90,//被点赞
-			collectioned: 99,//被收藏
-		}
+	userArticle: [//我发表的文章
+		//文章id
 	],
 	supportArticle: [//我点赞的文章
 		{}
@@ -31,7 +24,15 @@ const UserInfo = {
 
 const articleList = [
 	{
-	
+		title: '标题',
+		description: '描述',
+		content: '文章内容',//富文本 图文
+		createTime: '2018-11-11',
+		upDateTime: '2018-12-12',
+		supported: 90,//被点赞
+		collected: 99,//被收藏
+		auth:'作者',
+		comment:[] //评论
 	}
 ]
 

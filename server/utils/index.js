@@ -5,22 +5,21 @@ export default class BaseComponent {
 		this.idList = ['userId', 'articleId']
 	}
 	
-	getId(type) {
+	 async getId(type) {
+		// let idsData
 		if (!this.idList.includes(type)) {
 			console.log('id类型错误')
 			throw new Error('id类型错误')
 			return
 		}
-		// try{
-		const idData = Ids.findOne()
-		console.log(idData)
-		idData[type]++
-		console.log(idData[type])
-		idData.save()
-		return idData[type]
-		// }catch(err){
-		// 	console.log('获取ID数据失败')
-		// 	throw new Error(err)
-		// }
+		try {
+			const idData = await Ids.findOne();
+			idData[type] ++ ;
+			await idData.save();
+			return idData[type]
+		} catch (err) {
+			console.log('获取ID数据失败')
+			throw new Error(err)
+		}
 	}
 }
