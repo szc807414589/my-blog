@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import './badge.less'
 
 /*
@@ -16,9 +16,12 @@ class BadgeCount extends Component {
 		super(props)
 		this.state = {}
 	}
-	render(){
-		return(
-		
+	
+	render() {
+		return (
+			<div>
+			
+			</div>
 		)
 	}
 }
@@ -30,13 +33,19 @@ class Badge extends Component {
 	}
 	
 	render() {
-		const { count, dot, offset, overflowCount, showZero, status, text, title } = this.props
+		const {count, dot, offset, overflowCount, showZero, status, text, title} = this.props
+		const ofc = overflowCount || 99
 		return (
-			<div class="szc-badge">
-				{
-					dot ? <span className="szc-badge_dot"></span> : <span>{{ count }}</span>
-				}
-				
+			<div className="szc-badge">
+				{/*{*/}
+				{/*dot ? <span className="szc-badge_dot"></span> : */}
+				{/*}*/}
+				<span className="szc-badge-count"
+				      style={{
+					      top: offset[0],
+					      left: offset[1]
+				      }}
+				>{ count <= ofc ? count : ofc + '+' }</span>
 				{this.props.children}
 			</div>
 		)
