@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Loadable from "react-loadable"
 import loading from '../components/loading'
 // import renderRoutes from '../assets/js/utils/renderRoutes'
-import {renderRoutes} from 'react-router-config'
+import { renderRoutes } from 'react-router-config'
 import HeaderBar from '../components/header'
 import Content from '../components/content'
 
@@ -46,12 +46,17 @@ const User = Loadable({
 	loader: () => import("../pages/settings/user"),
 	loading: loading
 });
+const Message = Loadable({
+	loader: () => import("../pages/settings/message"),
+	loading: loading
+});
 
 
 class RouterModal extends Component {
 	constructor(props) {
 		super(props)
 	}
+	
 	render() {
 		return (
 			<div>
@@ -65,18 +70,18 @@ class RouterModal extends Component {
 }
 
 
-class SettingsRoute extends Component{
-	constructor(props){
+class SettingsRoute extends Component {
+	constructor(props) {
 		super(props)
 	}
-	render(){
-		const settings = routes[2].routes.find(i=>i.path === '/settings')
-		console.log(settings.routes)
-		return(
+	
+	render() {
+		console.log(routes[2].routes)
+		const settings = routes[2].routes.find(i => i.name === 'settings')
+		return (
 			<div>
 				<Settings>
-				
-				{renderRoutes(settings.routes)}
+					{renderRoutes(settings.routes)}
 				</Settings>
 			</div>
 		)
@@ -84,8 +89,7 @@ class SettingsRoute extends Component{
 }
 
 
-
- const routes = [
+const routes = [
 	{
 		path: '/login',
 		component: Login,
@@ -122,12 +126,16 @@ class SettingsRoute extends Component{
 			},
 			{
 				component: SettingsRoute,
-				path: '/settings',
-				requiresAuth: false,
+				name:'settings',
 				routes: [
 					{
 						path: '/settings/user',
 						component: User,
+						requiresAuth: false
+					},
+					{
+						path: '/settings/message',
+						component: Message,
 						requiresAuth: false
 					},
 				]
