@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './badge.less'
 
 /*
@@ -11,20 +11,6 @@ import './badge.less'
 *text	在设置了 status 的前提下有效，设置状态点的文本	string	''
 *title	设置鼠标放在状态点上时显示的文字	string	count
 * */
-class BadgeCount extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {}
-	}
-	
-	render() {
-		return (
-			<div>
-			
-			</div>
-		)
-	}
-}
 
 class Badge extends Component {
 	constructor(props) {
@@ -33,19 +19,21 @@ class Badge extends Component {
 	}
 	
 	render() {
-		const {count, dot, offset, overflowCount, showZero, status, text, title} = this.props
+		const { count, dot, offset, overflowCount } = this.props
 		const ofc = overflowCount || 99
 		return (
 			<div className="szc-badge">
-				{/*{*/}
-				{/*dot ? <span className="szc-badge_dot"></span> : */}
-				{/*}*/}
-				<span className="szc-badge-count"
-				      style={{
-					      top: offset[0],
-					      left: offset[1]
-				      }}
-				>{ count <= ofc ? count : ofc + '+' }</span>
+				{
+					dot ?
+						<span className="szc-badge_dot"></span> :
+						<span className="szc-badge-count"
+						      style={{
+							      top: offset[0],
+							      left: offset[1]
+						      }}
+						>{count <= ofc ? count : ofc + '+'}</span>
+				}
+				
 				{this.props.children}
 			</div>
 		)

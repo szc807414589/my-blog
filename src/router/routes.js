@@ -76,7 +76,6 @@ class SettingsRoute extends Component {
 	}
 	
 	render() {
-		console.log(routes[2].routes)
 		const settings = routes[2].routes.find(i => i.name === 'settings')
 		return (
 			<div>

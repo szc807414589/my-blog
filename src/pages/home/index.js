@@ -91,7 +91,7 @@ class Home extends Component {
 						<Card
 							style={{width: 240}}
 							actions={[
-								<Icon type="setting"/>,
+								<Icon type="setting" onClick={()=>this.props.history.push('/settings/user')}/>,
 								<Icon type="edit" onClick={this.addArticle}/>,
 								<Icon type="ellipsis"/>
 							]}

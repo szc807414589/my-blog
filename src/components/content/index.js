@@ -9,12 +9,9 @@ class Content extends Component {
 	}
 	
 	render() {
-		console.log(this.props.route);
 		return (
 			<section>
 				{this.props.children}
-				{/*{renderRoutes(this.props.children)}*/}
-			
 			</section>
 		)
 	}
