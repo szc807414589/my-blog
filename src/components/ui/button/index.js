@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './button.less'
+import './styles/button.less'
 
 /*
 *
@@ -11,19 +11,17 @@ import './button.less'
 class Button extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			defaultUrl: '',
-			defaultAlt: '头像',
-		}
+		this.state = {}
 	}
 	
 	render() {
-		const { shape, size, disabled } = this.props
+		const { disabled,onClick,style } = this.props
 		return (
 				<button
 					className="szc-btn"
-					// className="ant-btn"
 					disabled={disabled}
+					onClick={onClick}
+					style={style}
 				>
 					{this.props.children}
 				</button>

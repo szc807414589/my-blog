@@ -11,16 +11,13 @@ import './input.less'
 class Input extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			defaultUrl: '',
-			defaultAlt: '头像',
-		}
+		this.state = {}
 	}
 	
 	render() {
 		const { shape, size, disabled } = this.props
 		return (
-			<input className="szc-input" type="text"/>
+			<input className="szc-input"  type="text"/>
 		)
 	}
 }

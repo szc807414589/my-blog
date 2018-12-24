@@ -1,3 +1,7 @@
+@import "../../../../assets/css/themes/default";
+@import "../../../../assets/css/mixins/index";
+@import "./mixin";
+
 .szc-btn {
   line-height: 1.499;
   display: inline-block;
@@ -6,8 +10,8 @@
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   cursor: pointer;
-  background-image: none;
-  background-color: #1890ff;
+  //background-image: none;
+  background-color: @highlight-color;
   border: 1px solid transparent;
   white-space: nowrap;
   padding: 0 15px;
@@ -23,7 +27,7 @@
   position: relative;
   -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
-  color: rgba(255, 255, 255);
+  color: @btn-primary-color;
   overflow: hidden;
   outline: none;
 
