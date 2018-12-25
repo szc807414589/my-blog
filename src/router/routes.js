@@ -1,19 +1,10 @@
 import React, { Component } from 'react'
 import Loadable from "react-loadable"
 import loading from '../components/loading'
-// import renderRoutes from '../assets/js/utils/renderRoutes'
 import { renderRoutes } from 'react-router-config'
 import HeaderBar from '../components/header'
 import Content from '../components/content'
 
-// const HeaderBar = Loadable({
-// 	loader: () => import("../components/header"),
-// 	loading: loading
-// });
-// const Content = Loadable({
-// 	loader: () => import("../components/content"),
-// 	loading: loading
-// });
 const Home = Loadable({
 	loader: () => import("../pages/home/index"),
 	loading: loading
@@ -48,6 +39,10 @@ const User = Loadable({
 });
 const Message = Loadable({
 	loader: () => import("../pages/settings/message"),
+	loading: loading
+});
+const MyPage = Loadable({
+	loader: () => import("../pages/myPage"),
 	loading: loading
 });
 
@@ -121,6 +116,11 @@ const routes = [
 			{
 				path: '/detail',
 				component: Detail,
+				requiresAuth: true
+			},
+			{
+				path: '/myPage',
+				component: MyPage,
 				requiresAuth: true
 			},
 			{

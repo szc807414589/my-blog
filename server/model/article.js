@@ -14,6 +14,7 @@ const article = new Schema({
 	articleCommentNumber: { type: Number, default: 0 },
 	articleAuth: { type: String, default: '' },
 	articleComment: { type: Array },
+	articleThumbnail: { type: String, default: '' }
 })
 
 const Article = mongoose.model('article', article)

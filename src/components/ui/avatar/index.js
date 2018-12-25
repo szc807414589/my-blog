@@ -18,15 +18,16 @@ class Avatar extends Component {
 	}
 	
 	render() {
-		const { src, shape, size, alt } = this.props
+		const { src, shape, size, alt, onClick } = this.props
 		return (
 			<div className="avatarBox"
 			     style={{
-				     width:`${size}px`,
-				     height:`${size}px`,
-				     lineHeight:`${size}px`,
-				     borderRadius:shape === 'square'? '4px' : '50%'
+				     width: `${size}px`,
+				     height: `${size}px`,
+				     lineHeight: `${size}px`,
+				     borderRadius: shape === 'square' ? '4px' : '50%'
 			     }}
+			     onClick={onClick}
 			>
 				<img
 					src={src || this.state.defaultUrl}

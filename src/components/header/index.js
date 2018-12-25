@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button ,Avatar} from 'antd';
+import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button } from 'antd';
+import { Avatar } from '../ui'
 import './header.less'
 import history from '../../history'
 import { postApi } from "../../assets/js/axios"
@@ -122,6 +123,8 @@ class HeaderBar extends Component {
 									this.state.userInfo.userAvatar:
 									'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
 								}
+								onClick={()=>{
+									history.push('/myPage')}}
 							/> :
 							<Button className="header_login" type="primary" ghost>登录</Button>
 					}

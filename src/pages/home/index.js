@@ -1,15 +1,14 @@
-import React, {Component} from 'react'
-import {Card, Icon, List, Row, Col, Carousel, Avatar, Spin, message} from 'antd'
-import listItem from './mock'
-import {postApi, getApi} from '../../assets/js/axios'
+import React, { Component } from 'react'
+import { Card, Icon, List, Row, Col, Carousel, Avatar, Spin, Tag } from 'antd'
+import { postApi } from '../../assets/js/axios'
 import api from '../../assets/js/axios/api'
 import InfiniteScroll from 'react-infinite-scroller'
 import './home.less'
 
-const {Meta} = Card;
-const IconText = ({type, text}) => (
+const { Meta } = Card;
+const IconText = ({ type, text }) => (
 	<span>
-	    <Icon type={type} style={{marginRight: 8}}/>{text}
+	    <Icon type={type} style={{ marginRight: 8 }}/>{text}
     </span>
 );
 
@@ -28,19 +27,21 @@ class Home extends Component {
 	componentDidMount() {
 		this.getList()
 	}
-	addArticle(){
-		postApi(api.addArticle,{})
+	
+	addArticle() {
+		postApi(api.addArticle, {})
 			.then(res => {
 				console.log(res)
 			})
 	}
+	
 	getList() {
-		postApi(api.GetArticleList,{})
+		postApi(api.GetArticleList, {})
 			.then(res => {
-				if(res.msg === 'success'){
+				if (res.msg === 'success') {
 					const data = res.data
 					this.setState({
-						listData:data
+						listData: data
 					})
 				}
 				
@@ -50,87 +51,92 @@ class Home extends Component {
 	render() {
 		const list = this.state.listData
 		return (
-				<Row className="home_container">
-					<Col xl={18} lg={24} className="left_content">
-						{
-							<List
-								itemLayout="vertical"
-								size="small"
-								bordered={true}
-								dataSource={list}
-								style={{width: '700px'}}
-								renderItem={item => (
-									<List.Item
-										key={item.articleTitle}
-										actions={[
-											<IconText type="star-o" text={item.articleCollectedNumber}/>,
-											<IconText type="like-o" text={item.articleSupportedNumber}/>,
-											<IconText type="message" text={item.articleCommentNumber}/>
-										]}
-										extra={<img width={272}
-										            alt="logo"
-										            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>}
-									>
-										<List.Item.Meta
-											title={<a href={item.href}>{item.articleTitle}</a>}
-											description={item.articleDesc}
-										/>
-									</List.Item>
-								)}
-							>
-								{this.state.loading && this.state.hasMore && (
-									<div className="demo-loading-container">
-										<Spin/>
-									</div>
-								)}
-							</List>
-							
-						}
-					</Col>
-					<Col xl={6} lg={0} className="right_content">
-						<Card
-							style={{width: 240}}
-							actions={[
-								<Icon type="setting" onClick={()=>this.props.history.push('/settings/user')}/>,
-								<Icon type="edit" onClick={this.addArticle}/>,
-								<Icon type="ellipsis"/>
-							]}
+			<Row className="home_container">
+				<Col xl={18} lg={24} className="left_content">
+					{
+						<List
+							itemLayout="vertical"
+							size="small"
+							bordered={true}
+							dataSource={list}
+							style={{ width: '700px' }}
+							renderItem={item => (
+								<List.Item
+									key={item.articleTitle}
+									actions={[
+										<Tag color="cyan">{item.articleAuth}</Tag>,
+										<IconText type="star-o" text={item.articleCollectedNumber}/>,
+										<IconText type="like-o" text={item.articleSupportedNumber}/>,
+										<IconText type="message" text={item.articleCommentNumber}/>
+									]}
+									extra={
+										item.articleThumbnail ?
+										<img width={272}
+										     alt="logo"
+										     src={item.articleThumbnail}/>
+										: ''
+									}
+								>
+									<List.Item.Meta
+										title={<a href={item.href}>{item.articleTitle}</a>}
+										description={item.articleDesc}
+									/>
+								</List.Item>
+							)}
 						>
-							<Meta
-								avatar={<Avatar
-									src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
-								title="Card title"
-								description="This is the description"
-							/>
-						</Card>
-						{/*热门文章*/}
-						<div>
-							<Card
-								title="热门文章"
-								style={{width: 240, marginTop: 20}}
-							>
-								<p>热门文章1</p>
-								<p>热门文章2</p>
-								<p>热门文章3</p>
-							</Card>,
-						</div>
-						{/*banner*/}
-						<Carousel autoplay>
-							{/*{*/}
-								{/*this.state.bannerList.map((k, v) => (*/}
-									{/*<div key={v}>*/}
-										{/*<img src={k.imgUrl} alt=""/>*/}
-									{/*</div>*/}
-								{/*))*/}
-							{/*}*/}
-							<div> <h1>1</h1></div>
-							<div> <h1>2</h1></div>
-							<div> <h1>3</h1></div>
-							<div> <h1>4</h1></div>
-						</Carousel>
-						{/*友情链接*/}
-					</Col>
-				</Row>
+							{this.state.loading && this.state.hasMore && (
+								<div className="demo-loading-container">
+									<Spin/>
+								</div>
+							)}
+						</List>
+						
+					}
+				</Col>
+				<Col xl={6} lg={0} className="right_content">
+					<Card
+						style={{ width: 240 }}
+						actions={[
+							<Icon type="setting" onClick={() => this.props.history.push('/settings/user')}/>,
+							<Icon type="edit" onClick={this.addArticle}/>,
+							<Icon type="ellipsis"/>
+						]}
+					>
+						<Meta
+							avatar={<Avatar
+								src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+							title="Card title"
+							description="This is the description"
+						/>
+					</Card>
+					{/*热门文章*/}
+					<div>
+						<Card
+							title="热门文章"
+							style={{ width: 240, marginTop: 20 }}
+						>
+							<p>热门文章1</p>
+							<p>热门文章2</p>
+							<p>热门文章3</p>
+						</Card>,
+					</div>
+					{/*banner*/}
+					<Carousel autoplay>
+						{/*{*/}
+						{/*this.state.bannerList.map((k, v) => (*/}
+						{/*<div key={v}>*/}
+						{/*<img src={k.imgUrl} alt=""/>*/}
+						{/*</div>*/}
+						{/*))*/}
+						{/*}*/}
+						<div><h1>1</h1></div>
+						<div><h1>2</h1></div>
+						<div><h1>3</h1></div>
+						<div><h1>4</h1></div>
+					</Carousel>
+					{/*友情链接*/}
+				</Col>
+			</Row>
 		)
 	}
 }

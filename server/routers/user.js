@@ -26,6 +26,7 @@ class user extends BaseComponent {
 			return res.json({ code: 10003, msg: codeData[10003] })
 		}
 		User.findOne({ _id: userKey }, _filter, (err, doc) => {
+			// console.log(err)
 			if (err) {
 				return res.json({ code: 99999, msg: codeData[99999],data:null })
 			}
@@ -67,7 +68,7 @@ class user extends BaseComponent {
 	
 	login(req, res) {
 		const { user, pwd } = req.body
-		User.findOne({ user, pwd: this.md5Pwd(pwd) }, _filter, (err, doc) => {
+		User.findOne({ user, pwd: this.md5Pwd(pwd) }, (err, doc) => {
 			if (!doc) {
 				return res.json({ code: 10004, msg: codeData[10004] })
 			}
