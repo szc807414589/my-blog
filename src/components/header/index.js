@@ -123,10 +123,18 @@ class HeaderBar extends Component {
 									this.state.userInfo.userAvatar:
 									'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
 								}
-								onClick={()=>{
-									history.push('/myPage')}}
+								onClick={
+									()=>{history.push('/myPage')}
+								}
 							/> :
-							<Button className="header_login" type="primary" ghost>登录</Button>
+							<Button
+								onClick={
+									()=>{history.push('/login')}
+								}
+								className="header_login"
+								type="primary" ghost>
+								登录
+							</Button>
 					}
 				</header>
 			</div>

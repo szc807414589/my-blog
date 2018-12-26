@@ -57,7 +57,7 @@ class Home extends Component {
 						<List
 							itemLayout="vertical"
 							size="small"
-							bordered={true}
+							// bordered={true}
 							dataSource={list}
 							style={{ width: '700px' }}
 							renderItem={item => (

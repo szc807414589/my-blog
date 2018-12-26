@@ -1,33 +1,26 @@
 import React, { Component } from 'react'
 import { Avatar, Button,List } from "../../components/ui"
-import { Tabs } from 'antd'
+import { Tabs,Tag,Icon } from 'antd'
 import './myPage.less'
 import api from "../../assets/js/axios/api"
 import { postApi } from "../../assets/js/axios"
 
+const Item = List.Item
+console.log(Item)
+const IconText = ({ type, text }) => (
+	<span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+		{text}
+  </span>
+);
 class HeaderBlock extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			listData: []
 		}
-		this.getList = this.getList.bind(this)
 	}
-	componentDidMount() {
-		this.getList()
-	}
-	getList() {
-		postApi(api.GetArticleList, {})
-			.then(res => {
-				if (res.msg === 'success') {
-					const data = res.data
-					this.setState({
-						listData: data
-					})
-				}
-				
-			})
-	}
+	
 	render() {
 		const { userInfo } = this.props
 		return (
@@ -63,14 +56,32 @@ export default class MyPage extends Component {
 			userInfo: {
 				userName: '旗木卡卡西',
 				userDesc: '五五开'
-			}
+			},
+			listData: []
 		}
+		this.getList = this.getList.bind(this)
+	}
+	componentDidMount() {
+		this.getList()
+	}
+	getList() {
+		postApi(api.GetArticleList, {})
+			.then(res => {
+				if (res.msg === 'success') {
+					const data = res.data
+					this.setState({
+						listData: data
+					})
+				}
+				
+			})
 	}
 	callback(key) {
 		console.log(key);
 	}
 	render() {
 		const list = this.state.listData
+		console.log(list)
 		return (
 			<div>
 				<HeaderBlock userInfo={this.state.userInfo}/>
@@ -83,30 +94,30 @@ export default class MyPage extends Component {
 					bordered={true}
 					dataSource={list}
 					style={{ width: '700px' }}
-					// renderItem={item => (
-					// 	<List.Item
-					// 		key={item.articleTitle}
-					// 		actions={[
-					// 			<Tag color="cyan">{item.articleAuth}</Tag>,
-					// 			<IconText type="star-o" text={item.articleCollectedNumber}/>,
-					// 			<IconText type="like-o" text={item.articleSupportedNumber}/>,
-					// 			<IconText type="message" text={item.articleCommentNumber}/>
-					// 		]}
-					// 		extra={
-					// 			item.articleThumbnail ?
-					// 				<img width={272}
-					// 				     alt="logo"
-					// 				     src={item.articleThumbnail}/>
-					// 				: ''
-					// 		}
-					//
-					// 	>
-					// 		<List.Item.Meta
-					// 			title={<a href={item.href}>{item.articleTitle}</a>}
-					// 			description={item.articleDesc}
-					// 		/>
-					// 	</List.Item>
-					// )}
+					renderItem={item => (
+						<Item
+							key={item.articleTitle}
+							actions={[
+								<Tag color="cyan">{item.articleAuth}</Tag>,
+								<IconText type="star-o" text={item.articleCollectedNumber}/>,
+								<IconText type="like-o" text={item.articleSupportedNumber}/>,
+								<IconText type="message" text={item.articleCommentNumber}/>
+							]}
+							extra={
+								item.articleThumbnail ?
+									<img width={272}
+									     alt="logo"
+									     src={item.articleThumbnail}/>
+									: ''
+							}
+
+						>
+							{/*<List.Item.Meta*/}
+								{/*title={<a href={item.href}>{item.articleTitle}</a>}*/}
+								{/*description={item.articleDesc}*/}
+							{/*/>*/}
+						</Item>
+					)}
 				/>
 			</div>
 		)
