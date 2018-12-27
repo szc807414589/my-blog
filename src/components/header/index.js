@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button } from 'antd';
+import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button, Select } from 'antd';
 import { Avatar } from '../ui'
 import './header.less'
 import history from '../../history'
@@ -30,15 +30,18 @@ class HeaderBar extends Component {
 			visible: false,
 			current: 'home',
 			isLogin: false,
-			userInfo:{}
+			userInfo: {},
+			lang:'zh-CN'
 		}
 		this.handleVisibleChange = this.handleVisibleChange.bind(this)
 		this.handleClick = this.handleClick.bind(this)
 		this.getUserInfo = this.getUserInfo.bind(this)
+		this.getdefaultValue = this.getdefaultValue.bind(this)
 	}
 	
 	componentDidMount() {
 		this.getUserInfo()
+		this.getdefaultValue()
 	}
 	
 	handleVisibleChange(flag) {
@@ -70,6 +73,19 @@ class HeaderBar extends Component {
 			})
 	}
 	
+	handleChange(value) {
+		console.log(`selected ${value}`)
+		localStorage.setItem('lang', value)
+		// window.location.search = `?lang=${value}`
+	}
+	getdefaultValue(){
+		let lang = localStorage.getItem('lang')
+		if(lang){
+			this.setState({
+				lang
+			})
+		}
+	}
 	render() {
 		return (
 			<div className="header_container">
@@ -97,21 +113,21 @@ class HeaderBar extends Component {
 						<Input type="text" placeholder="search"/>
 					</div>
 					{/*换主题*/}
-					<div className="header_menu">
-						<Dropdown
-							overlay={menu}
-							onVisibleChange={this.handleVisibleChange}
-							trigger={['click']}
-							visible={this.state.visible}
-						>
-							<span
-								className="ant-dropdown-link"
-								style={{ cursor: 'pointer' }}
-							>
-								Click me <Icon type="down"/>
-							</span>
-						</Dropdown>
-					</div>
+					{/*<div className="header_menu">*/}
+					{/*<Dropdown*/}
+					{/*overlay={menu}*/}
+					{/*onVisibleChange={this.handleVisibleChange}*/}
+					{/*trigger={['click']}*/}
+					{/*visible={this.state.visible}*/}
+					{/*>*/}
+					{/*<span*/}
+					{/*className="ant-dropdown-link"*/}
+					{/*style={{ cursor: 'pointer' }}*/}
+					{/*>*/}
+					{/*Click me <Icon type="down"/>*/}
+					{/*</span>*/}
+					{/*</Dropdown>*/}
+					{/*</div>*/}
 					{/*发表文章
 					  *需要登录
 					  * */}
@@ -119,23 +135,31 @@ class HeaderBar extends Component {
 						this.state.isLogin ?
 							<Avatar
 								src={
-									this.state.userInfo.userAvatar?
-									this.state.userInfo.userAvatar:
-									'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+									this.state.userInfo.userAvatar ?
+										this.state.userInfo.userAvatar :
+										'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
 								}
 								onClick={
-									()=>{history.push('/myPage')}
+									() => {
+										history.push('/myPage')
+									}
 								}
 							/> :
 							<Button
 								onClick={
-									()=>{history.push('/login')}
+									() => {
+										history.push('/login')
+									}
 								}
 								className="header_login"
 								type="primary" ghost>
 								登录
 							</Button>
 					}
+					<Select defaultValue={this.state.lang} onChange={this.handleChange}>
+						<Select.Option value="zh-CN">zh-CN</Select.Option>
+						<Select.Option value="en-US">en-US</Select.Option>
+					</Select>
 				</header>
 			</div>
 		)

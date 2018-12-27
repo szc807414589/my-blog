@@ -1,14 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './router'
-// import {Router} from 'react-router-dom'
-// import history from './history'
 import rootReducer from './redux/reducers'
 import {createStore,applyMiddleware,compose} from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import { helloSaga } from './redux/sagas'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
 // 利用redux-logger打印日志
 import {createLogger} from 'redux-logger'
 import './index.css';

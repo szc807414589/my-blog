@@ -3286,6 +3286,11 @@ console-control-strings@^1.0.0, console-control-strings@^1.1.0, console-control-
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
+console-polyfill@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/console-polyfill/-/console-polyfill-0.3.0.tgz#84900902a18c47a5eba932be75fa44d23e8af861"
+  integrity sha512-w+JSDZS7XML43Xnwo2x5O5vxB0ID7T5BdqDtyqT6uiCAX2kZAgcWxNaGqT97tZfSHzfOcvrfsDAodKcJ3UvnXQ==
+
 constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
@@ -3326,7 +3331,7 @@ cookie-signature@1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
 
-cookie@0.3.1:
+cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
@@ -5525,7 +5530,7 @@ hoek@4.x.x:
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
   integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.5:
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
@@ -5925,31 +5930,24 @@ intersperse@^1.0.0:
   resolved "https://registry.yarnpkg.com/intersperse/-/intersperse-1.0.0.tgz#f2561fb1cfef9f5277cc3347a22886b4351a5181"
   integrity sha1-8lYfsc/vn1J3zDNHoiiGtDUaUYE=
 
-intl-format-cache@^2.0.5:
-  version "2.1.0"
-  resolved "http://registry.npm.taobao.org/intl-format-cache/download/intl-format-cache-2.1.0.tgz#04a369fecbfad6da6005bae1f14333332dcf9316"
-  integrity sha1-BKNp/sv61tpgBbrh8UMzMy3PkxY=
-
 intl-messageformat-parser@1.4.0:
   version "1.4.0"
-  resolved "http://registry.npm.taobao.org/intl-messageformat-parser/download/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
+  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
   integrity sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
 
-intl-messageformat@^2.0.0, intl-messageformat@^2.1.0:
+intl-messageformat@^2.2.0:
   version "2.2.0"
-  resolved "http://registry.npm.taobao.org/intl-messageformat/download/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
   integrity sha1-NFvNRt5jC3aDMwwuUhd/9eq0hPw=
   dependencies:
     intl-messageformat-parser "1.4.0"
 
-intl-relativeformat@^2.1.0:
-  version "2.1.0"
-  resolved "http://registry.npm.taobao.org/intl-relativeformat/download/intl-relativeformat-2.1.0.tgz#010f1105802251f40ac47d0e3e1a201348a255df"
-  integrity sha1-AQ8RBYAiUfQKxH0OPhogE0iiVd8=
-  dependencies:
-    intl-messageformat "^2.0.0"
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+  integrity sha1-giRKIZDE5Bn4Nx9ao02qNCDiq94=
 
-invariant@^2.1.1, invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/invariant/download/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
@@ -6111,6 +6109,11 @@ is-dotfile@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/is-dotfile/-/is-dotfile-1.0.3.tgz#a6a2f32ffd2dfb04f5ca25ecd0f6b83cf798a1e1"
   integrity sha1-pqLzL/0t+wT1yiXs0Pa4PPeYoeE=
+
+is-electron@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/is-electron/-/is-electron-2.2.0.tgz#8943084f09e8b731b3a7a0298a7b5d56f6b7eef0"
+  integrity sha512-SpMppC2XR3YdxSzczXReBjqs2zGscWQpBIKqwXYBFic0ERaxNVgwLCHwOLZeESfdJQjX0RDvrJ1lBXX2ij+G1Q==
 
 is-equal-shallow@^0.1.3:
   version "0.1.3"
@@ -7179,6 +7182,11 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
+
 loader-fs-cache@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.1.tgz#56e0bf08bd9708b26a765b68509840c8dec9fdbc"
@@ -7303,6 +7311,11 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
+
+lodash.merge@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
+  integrity sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -9810,7 +9823,7 @@ querystring-es3@^0.2.0:
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
   integrity sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=
 
-querystring@0.2.0:
+querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
@@ -10381,16 +10394,22 @@ react-infinite-scroller@^1.2.2:
   dependencies:
     prop-types "^15.5.8"
 
-react-intl@^2.7.2:
-  version "2.7.2"
-  resolved "http://registry.npm.taobao.org/react-intl/download/react-intl-2.7.2.tgz#efe97e3fc0e99b4e88a6e6150854d3d1852a4381"
-  integrity sha1-7+l+P8Dpm06IpuYVCFTT0YUqQ4E=
+react-intl-universal@^1.15.5:
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/react-intl-universal/-/react-intl-universal-1.15.5.tgz#708b59cfea87f4f75cad36a98e6ff4f8a9777591"
+  integrity sha512-EXU9xZalIpYoD0mRm8RxtcfsWykOqw3VO792Ah8p6KDBt6bOEVOCm/D9tT+1lO7jTgQfA7goMVs5nqEsvfD/ZQ==
   dependencies:
-    hoist-non-react-statics "^2.5.5"
-    intl-format-cache "^2.0.5"
-    intl-messageformat "^2.1.0"
-    intl-relativeformat "^2.1.0"
-    invariant "^2.1.1"
+    console-polyfill "^0.3.0"
+    cookie "^0.3.1"
+    escape-html "^1.0.3"
+    intl "^1.2.5"
+    intl-messageformat "^2.2.0"
+    invariant "^2.2.2"
+    is-electron "^2.1.0"
+    load-script "^1.0.0"
+    lodash.merge "^4.6.1"
+    object-keys "^1.0.11"
+    querystring "^0.2.0"
 
 react-is@^16.3.2, react-is@^16.6.3:
   version "16.6.3"

@@ -50,48 +50,40 @@ class Home extends Component {
 	
 	render() {
 		const list = this.state.listData
+		
 		return (
 			<Row className="home_container">
 				<Col xl={18} lg={24} className="left_content">
-					{
-						<List
-							itemLayout="vertical"
-							size="small"
-							// bordered={true}
-							dataSource={list}
-							style={{ width: '700px' }}
-							renderItem={item => (
-								<List.Item
-									key={item.articleTitle}
-									actions={[
-										<Tag color="cyan">{item.articleAuth}</Tag>,
-										<IconText type="star-o" text={item.articleCollectedNumber}/>,
-										<IconText type="like-o" text={item.articleSupportedNumber}/>,
-										<IconText type="message" text={item.articleCommentNumber}/>
-									]}
-									extra={
-										item.articleThumbnail ?
+					<List
+						itemLayout="vertical"
+						size="small"
+						bordered={true}
+						dataSource={list}
+						style={{ width: '700px' }}
+						renderItem={item => (
+							<List.Item
+								key={item.articleTitle}
+								actions={[
+									<Tag color="cyan">{item.articleAuth}</Tag>,
+									<IconText type="star-o" text={item.articleCollectedNumber}/>,
+									<IconText type="like-o" text={item.articleSupportedNumber}/>,
+									<IconText type="message" text={item.articleCommentNumber}/>
+								]}
+								extra={
+									item.articleThumbnail ?
 										<img width={272}
 										     alt="logo"
 										     src={item.articleThumbnail}/>
 										: ''
-									}
-								>
-									<List.Item.Meta
-										title={<a href={item.href}>{item.articleTitle}</a>}
-										description={item.articleDesc}
-									/>
-								</List.Item>
-							)}
-						>
-							{this.state.loading && this.state.hasMore && (
-								<div className="demo-loading-container">
-									<Spin/>
-								</div>
-							)}
-						</List>
-						
-					}
+								}
+							>
+								<List.Item.Meta
+									title={<a href={item.href}>{item.articleTitle}</a>}
+									description={item.articleDesc}
+								/>
+							</List.Item>
+						)}
+					/>
 				</Col>
 				<Col xl={6} lg={0} className="right_content">
 					<Card
@@ -109,7 +101,7 @@ class Home extends Component {
 							description="This is the description"
 						/>
 					</Card>
-					{/*热门文章*/}
+					热门文章
 					<div>
 						<Card
 							title="热门文章"
@@ -120,21 +112,21 @@ class Home extends Component {
 							<p>热门文章3</p>
 						</Card>,
 					</div>
-					{/*banner*/}
+					banner
 					<Carousel autoplay>
-						{/*{*/}
-						{/*this.state.bannerList.map((k, v) => (*/}
-						{/*<div key={v}>*/}
-						{/*<img src={k.imgUrl} alt=""/>*/}
-						{/*</div>*/}
-						{/*))*/}
-						{/*}*/}
+						{
+							this.state.bannerList.map((k, v) => (
+								<div key={v}>
+									<img src={k.imgUrl} alt=""/>
+								</div>
+							))
+						}
 						<div><h1>1</h1></div>
 						<div><h1>2</h1></div>
 						<div><h1>3</h1></div>
 						<div><h1>4</h1></div>
 					</Carousel>
-					{/*友情链接*/}
+					友情链接
 				</Col>
 			</Row>
 		)

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import Item from './item'
-import '../../../assets/css/index.less'
-import './list.less'
-
+import './style/index.less'
 
 
 export default class List extends Component {
@@ -21,7 +19,11 @@ export default class List extends Component {
 	};
 	keys = {};
 	renderItem = (item, index) => {
-		const { dataSource, renderItem, rowKey } = this.props;
+		const {
+			dataSource,
+			renderItem,
+			rowKey
+		} = this.props;
 		let key;
 		
 		if (typeof rowKey === 'function') {
@@ -41,15 +43,21 @@ export default class List extends Component {
 		return renderItem(item, index);
 	};
 	
-	
-	
-	
 	render() {
-		const { bordered, dataSource,  renderItem,className, prefixCls,split, ...rest } = this.props
+		const {
+			bordered,
+			dataSource,
+			renderItem,
+			className,
+			prefixCls,
+			split,
+			itemLayout,
+			...rest
+		} = this.props
 		let splitDataSource = [...dataSource];
 		
 		let childrenContent;
-		childrenContent = <div style={{ minHeight: 53 }} />;
+		childrenContent = <div style={{ minHeight: 53 }}/>;
 		if (splitDataSource.length > 0) {
 			const items = splitDataSource.map((item, index) => this.renderItem(item, index));
 			const childrenList = [];
@@ -60,9 +68,10 @@ export default class List extends Component {
 					}),
 				);
 			});
-			childrenContent =  childrenList;
+			childrenContent = childrenList;
 		}
 		const classString = classNames(prefixCls, className, {
+			[`${prefixCls}-vertical`]: itemLayout === 'vertical',
 			[`${prefixCls}-split`]: split,
 			[`${prefixCls}-bordered`]: bordered,
 		});

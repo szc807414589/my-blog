@@ -1,23 +1,28 @@
 import React, { Component } from 'react'
-import { Avatar, Button,List } from "../../components/ui"
-import { Tabs,Tag,Icon } from 'antd'
+import { Avatar, Button, List } from "../../components/ui"
+import { Tabs, Tag, Icon } from 'antd'
 import './myPage.less'
 import api from "../../assets/js/axios/api"
 import { postApi } from "../../assets/js/axios"
 
-const Item = List.Item
-console.log(Item)
+
 const IconText = ({ type, text }) => (
 	<span>
-    <Icon type={type} style={{ marginRight: 8 }} />
+    <Icon type={type} style={{ marginRight: 8 }}/>
 		{text}
   </span>
 );
+const Demo = ({ sname }) => (
+	<div>hello,{sname}
+	</div>
+)
+
 class HeaderBlock extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			listData: []
+			listData: [],
+			lang: 'en'
 		}
 	}
 	
@@ -61,9 +66,11 @@ export default class MyPage extends Component {
 		}
 		this.getList = this.getList.bind(this)
 	}
+	
 	componentDidMount() {
 		this.getList()
 	}
+	
 	getList() {
 		postApi(api.GetArticleList, {})
 			.then(res => {
@@ -76,9 +83,11 @@ export default class MyPage extends Component {
 				
 			})
 	}
+	
 	callback(key) {
 		console.log(key);
 	}
+	
 	render() {
 		const list = this.state.listData
 		console.log(list)
@@ -93,9 +102,10 @@ export default class MyPage extends Component {
 				<List
 					bordered={true}
 					dataSource={list}
+					itemLayout="vertical"
 					style={{ width: '700px' }}
 					renderItem={item => (
-						<Item
+						<List.Item
 							key={item.articleTitle}
 							actions={[
 								<Tag color="cyan">{item.articleAuth}</Tag>,
@@ -110,13 +120,13 @@ export default class MyPage extends Component {
 									     src={item.articleThumbnail}/>
 									: ''
 							}
-
+						
 						>
-							{/*<List.Item.Meta*/}
-								{/*title={<a href={item.href}>{item.articleTitle}</a>}*/}
-								{/*description={item.articleDesc}*/}
-							{/*/>*/}
-						</Item>
+							<List.Item.Meta
+								title={<a href={item.href}>{item.articleTitle}</a>}
+								description={item.articleDesc}
+							/>
+						</List.Item>
 					)}
 				/>
 			</div>
