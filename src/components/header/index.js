@@ -4,6 +4,7 @@ import { Avatar } from '../ui'
 import './header.less'
 import history from '../../history'
 import { postApi } from "../../assets/js/axios"
+import intl from 'react-intl-universal'
 
 
 const menu = (
@@ -31,17 +32,22 @@ class HeaderBar extends Component {
 			current: 'home',
 			isLogin: false,
 			userInfo: {},
-			lang:'zh-CN'
+			lang: ''
 		}
 		this.handleVisibleChange = this.handleVisibleChange.bind(this)
 		this.handleClick = this.handleClick.bind(this)
 		this.getUserInfo = this.getUserInfo.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 		this.getdefaultValue = this.getdefaultValue.bind(this)
+	}
+	
+	componentWillMount() {
+		this.getdefaultValue()
 	}
 	
 	componentDidMount() {
 		this.getUserInfo()
-		this.getdefaultValue()
+		
 	}
 	
 	handleVisibleChange(flag) {
@@ -53,7 +59,7 @@ class HeaderBar extends Component {
 			current: e.key,
 		}, () => {
 			history.push(`${e.key}`)
-		});
+		})
 	}
 	
 	getUserInfo() {
@@ -74,19 +80,23 @@ class HeaderBar extends Component {
 	}
 	
 	handleChange(value) {
-		console.log(`selected ${value}`)
 		localStorage.setItem('lang', value)
+		this.setState({
+			lang: value
+		},()=>{
+			window.location.reload()
+		})
 		// window.location.search = `?lang=${value}`
 	}
-	getdefaultValue(){
+	
+	getdefaultValue() {
 		let lang = localStorage.getItem('lang')
-		if(lang){
-			this.setState({
-				lang
-			})
-		}
+		if (!lang) lang = 'zh-CN'
+		this.setState({ lang })
 	}
+	
 	render() {
+		const { lang } = this.state
 		return (
 			<div className="header_container">
 				<header>
@@ -99,35 +109,19 @@ class HeaderBar extends Component {
 						mode="horizontal"
 					>
 						<Menu.Item key="/">
-							<Icon type="smile" theme="twoTone"/>首页
+							<Icon type="smile" theme="twoTone"/>{intl.get('HOME')}
 						</Menu.Item>
 						<Menu.Item key="/classify">
-							<Icon type="appstore"/>分类
+							<Icon type="appstore"/>{intl.get('MESSAGE')}
 						</Menu.Item>
 						<Menu.Item key="/about">
-							About
+							{intl.get('ABOUT')}
 						</Menu.Item>
 					</Menu>
 					{/*搜索*/}
 					<div className="header_form">
-						<Input type="text" placeholder="search"/>
+						<Input type="text" placeholder={intl.get('SEARCH')}/>
 					</div>
-					{/*换主题*/}
-					{/*<div className="header_menu">*/}
-					{/*<Dropdown*/}
-					{/*overlay={menu}*/}
-					{/*onVisibleChange={this.handleVisibleChange}*/}
-					{/*trigger={['click']}*/}
-					{/*visible={this.state.visible}*/}
-					{/*>*/}
-					{/*<span*/}
-					{/*className="ant-dropdown-link"*/}
-					{/*style={{ cursor: 'pointer' }}*/}
-					{/*>*/}
-					{/*Click me <Icon type="down"/>*/}
-					{/*</span>*/}
-					{/*</Dropdown>*/}
-					{/*</div>*/}
 					{/*发表文章
 					  *需要登录
 					  * */}
@@ -156,9 +150,13 @@ class HeaderBar extends Component {
 								登录
 							</Button>
 					}
-					<Select defaultValue={this.state.lang} onChange={this.handleChange}>
-						<Select.Option value="zh-CN">zh-CN</Select.Option>
-						<Select.Option value="en-US">en-US</Select.Option>
+					<Select
+						defaultValue={lang}
+						onChange={this.handleChange}
+					>
+						<Select.Option value="zh-CN">简体中文</Select.Option>
+						<Select.Option value="en-US">English</Select.Option>
+						<Select.Option value="ja-JP">日本の</Select.Option>
 					</Select>
 				</header>
 			</div>

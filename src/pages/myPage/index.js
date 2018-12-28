@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Avatar, Button, List } from "../../components/ui"
 import { Tabs, Tag, Icon } from 'antd'
-import './myPage.less'
 import api from "../../assets/js/axios/api"
 import { postApi } from "../../assets/js/axios"
+import intl from 'react-intl-universal'
 
+import './myPage.less'
 
 const IconText = ({ type, text }) => (
 	<span>
@@ -44,10 +45,10 @@ class HeaderBlock extends Component {
 				</div>
 				<div className="header_box header_click">
 					<div className="header_click_info">
-						<span>关注|</span>
-						<span>粉丝</span>
+						<span>{intl.get('FOLLOW')}|</span>
+						<span>{intl.get('FANS')}</span>
 					</div>
-					<Button>编辑个人资料</Button>
+					<Button>{intl.get('EDIT')}</Button>
 				</div>
 			</div>
 		)
@@ -80,7 +81,6 @@ export default class MyPage extends Component {
 						listData: data
 					})
 				}
-				
 			})
 	}
 	

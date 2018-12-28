@@ -26,6 +26,19 @@ export default class ColorPicker extends Component {
 		let color = value.hex
 		this.setState({
 			color
+		},()=>{
+			window.less.modifyVars(
+					{
+						'@primary-color': value.hex,
+						'@link-color': value.hex,
+						'@btn-primary-bg': value.hex,
+					}
+				)
+				.then(() => { })
+				.catch(error => {
+					// message.error(`Failed to update theme`);
+					console.log(error)
+				});
 		})
 	}
 	
