@@ -26,7 +26,7 @@ const Register = Loadable({
 	loading: loading
 });
 const Detail = Loadable({
-	loader: () => import("../pages/detail"),
+	loader: () => import("../pages/home/detail"),
 	loading: loading
 });
 const Settings = Loadable({

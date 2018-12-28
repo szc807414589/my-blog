@@ -7,7 +7,7 @@ export default class ColorPicker extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			color: props.color,
+			color: props.color || '#1890ff',
 			displayColorPicker: "none",
 			SketchPickerWidth: '250px'
 		}
@@ -36,7 +36,6 @@ export default class ColorPicker extends Component {
 				)
 				.then(() => { })
 				.catch(error => {
-					// message.error(`Failed to update theme`);
 					console.log(error)
 				});
 		})

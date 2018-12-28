@@ -101,7 +101,7 @@ class Home extends Component {
 							description="This is the description"
 						/>
 					</Card>
-					热门文章
+					{/*热门文章*/}
 					<div>
 						<Card
 							title="热门文章"
@@ -112,7 +112,7 @@ class Home extends Component {
 							<p>热门文章3</p>
 						</Card>,
 					</div>
-					banner
+					{/*banner*/}
 					<Carousel autoplay>
 						{
 							this.state.bannerList.map((k, v) => (
@@ -126,7 +126,7 @@ class Home extends Component {
 						<div><h1>3</h1></div>
 						<div><h1>4</h1></div>
 					</Carousel>
-					友情链接
+					{/*友情链接*/}
 				</Col>
 			</Row>
 		)

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Input, Menu, Dropdown, Icon, Breadcrumb, Switch, Button, Select } from 'antd';
 import { Avatar } from '../ui'
-import './header.less'
+import ColorPicker from '../colorPicker'
+
 import history from '../../history'
 import { postApi } from "../../assets/js/axios"
 import intl from 'react-intl-universal'
-
+import './header.less'
 
 const menu = (
 	<Menu>
@@ -125,6 +126,15 @@ class HeaderBar extends Component {
 					{/*发表文章
 					  *需要登录
 					  * */}
+					<Select
+						defaultValue={lang}
+						onChange={this.handleChange}
+					>
+						<Select.Option value="zh-CN">简体中文</Select.Option>
+						<Select.Option value="en-US">English</Select.Option>
+						<Select.Option value="ja-JP">日本の</Select.Option>
+					</Select>
+					<ColorPicker/>
 					{
 						this.state.isLogin ?
 							<Avatar
@@ -150,14 +160,7 @@ class HeaderBar extends Component {
 								登录
 							</Button>
 					}
-					<Select
-						defaultValue={lang}
-						onChange={this.handleChange}
-					>
-						<Select.Option value="zh-CN">简体中文</Select.Option>
-						<Select.Option value="en-US">English</Select.Option>
-						<Select.Option value="ja-JP">日本の</Select.Option>
-					</Select>
+					
 				</header>
 			</div>
 		)
