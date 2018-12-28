@@ -78,7 +78,7 @@ class LoginPage extends Component {
 								block
 								type="primary"
 								className="login-form-button"
-								onClick={()=>{this.props.history.push('/login')}}>
+								onClick={()=>{this.props.history.push('/register')}}>
 								register now
 							</Button>
 						</FormItem>

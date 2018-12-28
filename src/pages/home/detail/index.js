@@ -1,12 +1,31 @@
-import React, { Component } from 'react'
-import { Avatar, Button } from "../../../components/ui"
-// import hljs from 'highlight.js'
-import hljs from 'highlight.js/lib/highlight'
+import React, {Component} from 'react'
+import {Avatar, Button} from "../../../components/ui"
 import marked from 'marked'
-import 'highlight.js/styles/arta.css'
-
+import hljs from 'highlight.js/lib/highlight';
+import javascript from 'highlight.js/lib/languages/javascript';
+import 'highlight.js/styles/atom-one-dark.css'
 import './detail.less'
 
+hljs.registerLanguage('javascript', javascript);
+
+export class Highlighter extends React.PureComponent {
+	componentDidMount() {
+		hljs.highlightBlock(this.node)
+	}
+	
+	render() {
+		let {children} = this.props
+		return (
+			<pre
+				ref={(node) => this.node = node}
+			>
+		        <code className="javascript">
+		          {children}
+		        </code>
+			</pre>
+		)
+	}
+}
 
 class Auth extends Component {
 	constructor(props) {
@@ -20,7 +39,7 @@ class Auth extends Component {
 	}
 	
 	render() {
-		const { authName, createTime, comment, supported } = this.props.authInfo
+		const {authName, createTime, comment, supported} = this.props.authInfo
 		return (
 			<div className="authInfo">
 				<Avatar/>
@@ -65,31 +84,10 @@ class Detail extends Component {
 				supported: 4
 			},
 			articleDesc: '这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述',
-			code: `word-wrap: normal;
-			      word-break: break-word!important;
-			      white-space: pre;
-			      overflow: auto;
-			      border-radius: 4px;
-			      line-height: 1.42857;
-			      border: 1px solid #ccc;`
 		}
 	}
 	
 	componentWillMount() {
-		marked.setOptions({
-			renderer: new marked.Renderer(),
-			pedantic: false,
-			gfm: true,
-			tables: true,
-			breaks: false,
-			sanitize: false,
-			smartLists: true,
-			smartypants: false,
-			xhtml: false,
-			language:'snippet',
-			style:'github',
-			highlight: code => hljs.highlightAuto(code).value,
-		});
 	}
 	
 	followAuthClick() {
@@ -110,11 +108,50 @@ class Detail extends Component {
 						</p>
 						<a href="https://www.baidu.com" target="_blank">链接</a>
 						<p>代码块</p>
-						<pre>
-							<code>
-								<div dangerouslySetInnerHTML={{ __html: marked(this.state.code) }}/>
-							</code>
-						</pre>
+						<Highlighter>
+							{
+								'document.querySelector("#username").onblur = function(){\n' +
+								'            // 1.获取用户数据\n' +
+								'            var name = this.value;\n' +
+								'\n' +
+								'            // 2，让异步对象发送请求\n' +
+								'            // 2.1 创建异步对象\n' +
+								'            var xhr = new XMLHttpRequest();\n' +
+								'            // 2.2 设置 请求行 open(请求方式，请求url):\n' +
+								'                // get请求如果有参数就需要在url后面拼接参数，\n' +
+								'                // post如果有参数，就在请求体中传递\n' +
+								'            xhr.open("get","validate.php?username="+name);\n' +
+								'            // 2.3 设置 请求头 setRequestHeader(\'key\':\'value\')\n' +
+								'                // get方式不需要设置请求头\n' +
+								'                // post需要设置 Content-Type:application/x-www-form-urlencoded\n' +
+								'            // 2.4 设置 请求体:发送请求  send(参数：key=value&key=value)\n' +
+								'                // 如果有参数，post应该在这个位置来传递参数\n' +
+								'                // 对于 get请求不需要在这个位置来传递参数\n' +
+								'            xhr.send(null);\n' +
+								'\n' +
+								'            // 响应报文：\n' +
+								'            // 报文行：响应状态码 响应状态信息  200 ok\n' +
+								'            // 报文头：服务器返回给客户端的一些额外信息  \n' +
+								'            // 报文体：服务器返回给客户端的数据 responseText:普通字符串  responseXML：符合xml格式的字符串\n' +
+								'            // xhr.status:可以获取当前服务器的响应状态  200 》成功\n' +
+								'            console.log(xhr.status);\n' +
+								'            // 一个真正成功的响应应该两个方面：1.服务器成功响应  2.数据已经回到客户端并且可以使用了\n' +
+								'            // 监听异步对象的响应状态 readystate\n' +
+								'            // 0:创建了异步对象，但是还没有真正的去发送请求\n' +
+								'            // 1.调用了send方法，正在发送请求\n' +
+								'            // 2.send方法执行完毕了，已经收到服务器的响应内容--原始内容，还不可以使用\n' +
+								'            // 3.正在解析数据\n' +
+								'            // 4.响应内容解析完毕，可以使用了\n' +
+								'            xhr.onreadystatechange = function(){\n' +
+								'                if(xhr.status == 200 && xhr.readyState == 4){\n' +
+								'                    console.log(xhr.responseText);\n' +
+								'                    console.log("-----------");\n' +
+								'                    document.querySelector(".showmsg").innerHTML = xhr.responseText;;\n' +
+								'                }\n' +
+								'            }\n' +
+								'        };\n'
+							}
+						</Highlighter>
 					</div>
 				</div>
 			</div>
