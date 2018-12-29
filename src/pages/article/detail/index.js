@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Avatar, Button} from "../../../components/ui"
+import React, { Component } from 'react'
+import { Avatar, Button } from "../../../components/ui/index"
 import marked from 'marked'
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -14,7 +14,7 @@ export class Highlighter extends React.PureComponent {
 	}
 	
 	render() {
-		let {children} = this.props
+		let { children } = this.props
 		return (
 			<pre
 				ref={(node) => this.node = node}
@@ -39,7 +39,7 @@ class Auth extends Component {
 	}
 	
 	render() {
-		const {authName, createTime, comment, supported} = this.props.authInfo
+		const { authName, createTime, comment, supported } = this.props.authInfo
 		return (
 			<div className="authInfo">
 				<Avatar/>
@@ -153,6 +153,10 @@ class Detail extends Component {
 							}
 						</Highlighter>
 					</div>
+					<div dangerouslySetInnerHTML={{
+						__html:`<pre data-lang="javascript" class="lang-javascript"><code class="lang-javascript"><em><span style="color:#c792ea">import </span></em><span style="color:#c3e88d">&#x27;braft-editor/dist/index.css&#x27;</span><br/><em><span style="color:#c792ea">import </span></em><span style="color:#c3e88d">&#x27;braft-extensions/dist/code-highlighter.css&#x27;</span><br/><em><span style="color:#c792ea">import </span></em><span style="color:#c3e88d">&#x27;./editArticle.less&#x27;</span><br/><br/></code></pre><p><span style="color:#000000">测试测试</span></p><h3><span style="color:#000000">好</span></h3>`
+					}}/>
+					
 				</div>
 			</div>
 		)

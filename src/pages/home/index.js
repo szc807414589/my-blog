@@ -4,6 +4,7 @@ import { postApi } from '../../assets/js/axios'
 import api from '../../assets/js/axios/api'
 import InfiniteScroll from 'react-infinite-scroller'
 import './home.less'
+import history from "../../history"
 
 const { Meta } = Card;
 const IconText = ({ type, text }) => (
@@ -69,6 +70,7 @@ class Home extends Component {
 									<IconText type="like-o" text={item.articleSupportedNumber}/>,
 									<IconText type="message" text={item.articleCommentNumber}/>
 								]}
+								onClick={()=>{history.push('/edit/detail')}}
 								extra={
 									item.articleThumbnail ?
 										<img width={272}

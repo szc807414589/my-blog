@@ -26,9 +26,14 @@ const Register = Loadable({
 	loading: loading
 });
 const Detail = Loadable({
-	loader: () => import("../pages/home/detail"),
+	loader: () => import("../pages/article/detail"),
 	loading: loading
 });
+const EditArticle = Loadable({
+	loader: () => import("../pages/article/editArticle"),
+	loading: loading
+});
+
 const Settings = Loadable({
 	loader: () => import("../pages/settings"),
 	loading: loading
@@ -51,7 +56,6 @@ class RouterModal extends Component {
 	constructor(props) {
 		super(props)
 	}
-	
 	render() {
 		return (
 			<div>
@@ -69,7 +73,6 @@ class SettingsRoute extends Component {
 	constructor(props) {
 		super(props)
 	}
-	
 	render() {
 		const settings = routes[2].routes.find(i => i.name === 'settings')
 		return (
@@ -114,8 +117,13 @@ const routes = [
 				requiresAuth: false
 			},
 			{
-				path: '/detail',
+				path: '/article/detail',
 				component: Detail,
+				requiresAuth: true
+			},
+			{
+				path: '/article/edit',
+				component: EditArticle,
 				requiresAuth: true
 			},
 			{
