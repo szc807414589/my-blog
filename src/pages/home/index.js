@@ -70,7 +70,7 @@ class Home extends Component {
 									<IconText type="like-o" text={item.articleSupportedNumber}/>,
 									<IconText type="message" text={item.articleCommentNumber}/>
 								]}
-								onClick={()=>{history.push('/edit/detail')}}
+								onClick={()=>{history.push('/article/detail')}}
 								extra={
 									item.articleThumbnail ?
 										<img width={272}

@@ -152,7 +152,7 @@ class HeaderBar extends Component {
 							<Button
 								onClick={
 									() => {
-										history.push('/login')
+										history.push('/login?path='+window.location.pathname)
 									}
 								}
 								className="header_login"

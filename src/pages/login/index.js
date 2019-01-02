@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Input, Icon, Button, Form} from 'antd'
+import React, { Component } from 'react'
+import { Input, Icon, Button, Form } from 'antd'
 import './login.less'
-import {message} from "antd/lib/index"
-import {postApi} from '../../assets/js/axios'
+import { message } from "antd/lib/index"
+import { postApi } from '../../assets/js/axios'
 import api from '../../assets/js/axios/api'
 
 const FormItem = Form.Item;
@@ -12,15 +12,20 @@ class LoginPage extends Component {
 		super(props)
 		this.state = {
 			user: '',
-			pwd: ''
+			pwd: '',
+			path: ''
 		}
 		this.handleClick = this.handleClick.bind(this)
 		this.inputChange = this.inputChange.bind(this)
 	}
-	
+	componentDidMount(){
+		const path = this.props.location.search.split('=')[1] || '/'
+		this.setState({path})
+	}
 	handleClick() {
-		const {user,pwd} = this.state
-		if(!user || !pwd){
+		let that = this
+		const { user, pwd } = that.state
+		if (!user || !pwd) {
 			message.error('请输入正确信息')
 			return
 		}
@@ -29,9 +34,8 @@ class LoginPage extends Component {
 			pwd
 		})
 			.then(res => {
-				console.log(res);
-				if(res.code === 10000){
-					this.props.history.push('/')
+				if (res.code === 10000) {
+					that.props.history.push(that.state.path)
 				}
 			})
 	}
@@ -42,6 +46,7 @@ class LoginPage extends Component {
 			[inputType]: e.target.value
 		})
 	}
+	
 	render() {
 		return (
 			<div className="login_container">
@@ -49,7 +54,7 @@ class LoginPage extends Component {
 					<Form className="login-form">
 						<FormItem>
 							<Input
-								prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+								prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
 								placeholder="admin"
 								name="user"
 								autoComplete="userName"
@@ -58,7 +63,7 @@ class LoginPage extends Component {
 						</FormItem>
 						<FormItem>
 							<Input
-								prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+								prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
 								type="password"
 								placeholder="admin"
 								name="pwd"
@@ -78,7 +83,9 @@ class LoginPage extends Component {
 								block
 								type="primary"
 								className="login-form-button"
-								onClick={()=>{this.props.history.push('/register')}}>
+								onClick={() => {
+									this.props.history.push('/register')
+								}}>
 								register now
 							</Button>
 						</FormItem>
