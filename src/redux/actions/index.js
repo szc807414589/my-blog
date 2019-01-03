@@ -2,8 +2,7 @@ let nextTodoId = 0
 const ADD_TODO = 'ADD_TODO'
 const TOOGLE_TODO = 'TOOGLE_TODO'
 const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
-const LOGIN = 'LOGIN'
-const LOGOUT = 'LOGOUT'
+
 
 export const VisibilityFilters = {
 	SHOW_ALL: 'SHOW_ALL',
@@ -26,9 +25,3 @@ export const setVisibilityFilter = filter => {
 	}
 }
 
-export const login = () => ({
-	type:LOGIN,
-})
-export const logout = () => ({
-	type:LOGOUT,
-})

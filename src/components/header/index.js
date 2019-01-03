@@ -7,6 +7,8 @@ import history from '../../history'
 import { postApi } from "../../assets/js/axios"
 import intl from 'react-intl-universal'
 import './header.less'
+import { getUserInfo, register } from '../../redux/actions/user.action'
+import { connect } from 'react-redux'
 
 const menu = (
 	<Menu>
@@ -64,9 +66,8 @@ class HeaderBar extends Component {
 	}
 	
 	getUserInfo() {
-		postApi('/user/userInfo', {})
+		this.props.getUserInfo()
 			.then(res => {
-				console.log(res)
 				if (res.msg === 'success') {
 					this.setState({
 						isLogin: true,
@@ -84,10 +85,9 @@ class HeaderBar extends Component {
 		localStorage.setItem('lang', value)
 		this.setState({
 			lang: value
-		},()=>{
+		}, () => {
 			window.location.reload()
 		})
-		// window.location.search = `?lang=${value}`
 	}
 	
 	getdefaultValue() {
@@ -152,7 +152,7 @@ class HeaderBar extends Component {
 							<Button
 								onClick={
 									() => {
-										history.push('/login?path='+window.location.pathname)
+										history.push('/login?path=' + window.location.pathname)
 									}
 								}
 								className="header_login"
@@ -160,11 +160,14 @@ class HeaderBar extends Component {
 								登录
 							</Button>
 					}
-					
+				
 				</header>
 			</div>
 		)
 	}
 }
 
-export default HeaderBar
+export default connect(
+	state => state.user,
+	{ getUserInfo }
+)(HeaderBar)

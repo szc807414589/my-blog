@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-import { Avatar, Button,Input } from '../../../components/ui'
+import { Avatar, } from '../../../components/ui'
+import { Button, Input,message } from 'antd'
 import './user.less'
+import { connect } from 'react-redux'
+import { postApi } from '../../../assets/js/axios'
+import api from '../../../assets/js/axios/api'
 
 /*
 * 用户头像/用户名/用户描述
@@ -8,10 +12,35 @@ import './user.less'
 class User extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			user: this.props.user,
+			userDesc: this.props.userDesc
+		}
+		this.handleClick = this.handleClick.bind(this)
+		this.inputChange = this.inputChange.bind(this)
+	}
+	
+	inputChange(e) {
+		let inputType = e.target.name
+		this.setState({
+			[inputType]: e.target.value
+		})
+	}
+	
+	handleClick() {
+		const { user, userDesc } = this.state
+		postApi(api.ModifyUserInfo, { user, userDesc })
+			.then(res => {
+				if(res.code === 10000){
+					message.success('修改成功')
+				}else{
+					message.success(res.msg)
+				}
+			})
 	}
 	
 	render() {
+		const { user, userDesc } = this.state
 		return (
 			<div>
 				<div className="user_list">
@@ -20,29 +49,44 @@ class User extends Component {
 						<Avatar
 							src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
 							size={80}/>
-						<Button>点击上传</Button>
 					</div>
 					
 					<div className="user_listItem">
 						<div className="user_label">用户名</div>
 						<div className="user_input">
-							<Input type="text" placeholder="userName"/>
+							<Input
+								name="user"
+								onChange={this.inputChange}
+								type="text"
+								defaultValue={user}
+								placeholder="userName"
+							/>
 						</div>
-						<Button>点击修改</Button>
 					</div>
 					
 					<div className="user_listItem">
 						<div className="user_label">个人介绍</div>
 						<div className="user_input">
-							<Input type="text" placeholder="userName"/>
+							<Input
+								name="userDesc"
+								onChange={this.inputChange}
+								type="text"
+								defaultValue={userDesc}
+								placeholder="userDesc"
+							/>
 						</div>
-						<Button>点击修改</Button>
 					</div>
-					
+					<div className="user_listItem">
+						<div className="user_input">
+							<Button onClick={this.handleClick}>点击修改</Button>
+						</div>
+					</div>
 				</div>
 			</div>
 		)
 	}
 }
 
-export default User
+export default connect(
+	state => state.user
+)(User)

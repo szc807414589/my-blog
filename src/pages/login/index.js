@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Input, Icon, Button, Form } from 'antd'
 import './login.less'
 import { message } from "antd/lib/index"
-import { postApi } from '../../assets/js/axios'
-import api from '../../assets/js/axios/api'
+import { login } from '../../redux/actions/user.action'
+import { connect } from 'react-redux'
 
 const FormItem = Form.Item;
 
@@ -18,24 +18,24 @@ class LoginPage extends Component {
 		this.handleClick = this.handleClick.bind(this)
 		this.inputChange = this.inputChange.bind(this)
 	}
-	componentDidMount(){
+	
+	componentDidMount() {
 		const path = this.props.location.search.split('=')[1] || '/'
-		this.setState({path})
+		this.setState({ path })
 	}
+	
 	handleClick() {
 		let that = this
-		const { user, pwd } = that.state
+		const { user, pwd, path } = that.state
 		if (!user || !pwd) {
-			message.error('请输入正确信息')
+			message.error('用户名或者密码不能为空')
 			return
 		}
-		postApi(api.Login, {
-			user,
-			pwd
-		})
+		this.props.login(user, pwd)
 			.then(res => {
+				console.log(res)
 				if (res.code === 10000) {
-					that.props.history.push(that.state.path)
+					that.props.history.push(path)
 				}
 			})
 	}
@@ -96,4 +96,7 @@ class LoginPage extends Component {
 	}
 }
 
-export default LoginPage
+export default connect(
+	state => state.user,
+	{ login }
+)(LoginPage)

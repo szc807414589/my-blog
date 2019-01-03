@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Input, Icon, Button, Form, message } from 'antd'
-import { postApi } from '../../assets/js/axios'
-import api from '../../assets/js/axios/api'
 import './register.less'
+import { register } from '../../redux/actions/user.action'
+import { connect } from 'react-redux'
 
 const FormItem = Form.Item;
 
-class RegisgerPage extends Component {
+class RegisterPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -28,10 +28,7 @@ class RegisgerPage extends Component {
 			message.error('两次密码输入不一致')
 			return
 		}
-		postApi(api.Register, {
-			user,
-			pwd
-		})
+		this.props.register(user, pwd)
 			.then(res => {
 				if (res.code === 10000) {
 					this.props.history.push('/')
@@ -130,4 +127,7 @@ class RegisgerPage extends Component {
 	}
 }
 
-export default RegisgerPage
+export default connect(
+	state => state.user,
+	{ register }
+)(RegisterPage)

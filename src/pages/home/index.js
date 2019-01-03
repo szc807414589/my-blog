@@ -112,17 +112,10 @@ class Home extends Component {
 							<p>热门文章1</p>
 							<p>热门文章2</p>
 							<p>热门文章3</p>
-						</Card>,
+						</Card>
 					</div>
 					{/*banner*/}
 					<Carousel autoplay>
-						{
-							this.state.bannerList.map((k, v) => (
-								<div key={v}>
-									<img src={k.imgUrl} alt=""/>
-								</div>
-							))
-						}
 						<div><h1>1</h1></div>
 						<div><h1>2</h1></div>
 						<div><h1>3</h1></div>

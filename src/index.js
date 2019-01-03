@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './router'
-import rootReducer from './redux/reducers'
+import rootReducer from './redux/reducers/reducer'
 import {createStore,applyMiddleware,compose} from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 // 利用redux-logger打印日志
 import {createLogger} from 'redux-logger'
 import './index.css';
@@ -13,11 +14,10 @@ import * as serviceWorker from './serviceWorker';
 let redux_devTool = window.devToolsExtension ?
 	window.devToolsExtension():
 	f => f
-const store = createStore(
-	rootReducer,
+const store = createStore(rootReducer, compose(
+	applyMiddleware(thunk),
 	redux_devTool
-)
-
+))
 ReactDOM.render(
 	<Provider store={store}>
 		<App/>

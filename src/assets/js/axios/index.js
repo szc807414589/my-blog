@@ -14,7 +14,6 @@ axios.interceptors.request.use(config => {
 })
 // //响应拦截器
 axios.interceptors.response.use(response => {
-	
 	// 判断请求码
 	if (response.status === 200) {
 		if (response.data.code && response.data.code !== 10000) {
@@ -43,7 +42,6 @@ export const postApi = (url, data, errCb) => {
 		})
 }
 export const getApi = (url, errcb) => {
-	// axios.defaults.baseURL = ''
 	return axios.get(url)
 		.then(res => {
 			return Promise.resolve(res)
