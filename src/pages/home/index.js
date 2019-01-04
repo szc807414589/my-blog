@@ -39,7 +39,7 @@ class Home extends Component {
 	getList() {
 		postApi(api.GetArticleList, {})
 			.then(res => {
-				if (res.msg === 'success') {
+				if (res.success) {
 					const data = res.data
 					this.setState({
 						listData: data

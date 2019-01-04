@@ -1,5 +1,5 @@
 import User from '../model/user'
-import codeData from '../code'
+import { errMsg } from "../code"
 import utility from 'utility'
 import BaseComponent from '../utils'
 
@@ -23,35 +23,35 @@ class user extends BaseComponent {
 	userInfo(req, res) {
 		const { userKey } = req.cookies
 		if (!userKey) {
-			return res.json({ code: 10003, msg: codeData[10003] })
+			return res.json(errMsg.NOT_LOGIN)
 		}
 		User.findOne({ _id: userKey }, _filter, (err, doc) => {
 			if (err) {
-				return res.json({ code: 99999, msg: codeData[99999], data: null })
+				return res.json(errMsg.BACKEND_ERR)
 			}
 			if (doc) {
-				return res.json({ code: 10000, msg: codeData[10000], data: doc })
+				return res.json({ ...errMsg.SUCCESS, data: doc })
 			}
 		})
 	}
 	
 	modifyUserInfo(req, res) {
 		const { userKey } = req.cookies
-		const body = req.body
-		console.log('-----------------------')
-		console.log(body)
-		console.log('-----------------------')
+		const { user, userDesc } = req.body
+		if (!user) {
+			return res.json(errMsg.USER_REQUIRE)
+		}
 		User.findByIdAndUpdate(
 			{ _id: userKey },
-			body,
+			{ user, userDesc },
 			{ new: true },
 			(err, doc) => {
 				console.log(doc)
 				if (err) {
-					return res.json({ code: 10005, msg: codeData[10005], data: null })
+					return res.json(errMsg.USER_MODIFY_ERR)
 				}
 				if (doc) {
-					return res.json({ code: 10000, msg: codeData[10000], data: doc })
+					return res.json({ ...errMsg.SUCCESS, data: doc })
 				}
 			})
 	}
@@ -72,29 +72,32 @@ class user extends BaseComponent {
 		const { user, pwd } = req.body
 		User.findOne({ user }, { 'pwd': 0, __v: 0 }, async (err, doc) => {
 			if (doc) {
-				return res.json({ code: 10001, msg: codeData[10001] })
+				return res.json(errMsg.SUCCESS)
 			}
 			const userModel = new User({ user, pwd: that.md5Pwd(pwd), userId })
 			userModel.save((e, d) => {
 				if (e) {
-					return res.json({ code: 99999, msg: codeData[99999] })
+					return res.json(errMsg.BACKEND_ERR)
 				}
 				const { _id } = d
 				res.cookie('userKey', _id)
-				return res.json({ code: 10000, msg: codeData[10000], data: d })
+				return res.json({ ...errMsg.SUCCESS, data: d })
 			})
 		})
 	}
 	
 	login(req, res) {
 		const { user, pwd } = req.body
-		User.findOne({ user, pwd: this.md5Pwd(pwd) }, { 'pwd': 0, __v: 0 }, (err, doc) => {
-			if (!doc) {
-				return res.json({ code: 10004, msg: codeData[10004] })
-			}
-			res.cookie('userKey', doc._id)
-			return res.json({ code: 10000, msg: codeData[10000], data: doc })
-		})
+		User.findOne(
+			{ user, pwd: this.md5Pwd(pwd) },
+			{ 'pwd': 0, __v: 0 },
+			(err, doc) => {
+				if (!doc) {
+					return res.json(errMsg.USER_LOGIN_ERR)
+				}
+				res.cookie('userKey', doc._id)
+				return res.json({ ...errMsg.SUCCESS, data: doc })
+			})
 	}
 	
 	md5Pwd(pwd) {

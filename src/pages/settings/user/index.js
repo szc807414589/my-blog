@@ -33,8 +33,6 @@ class User extends Component {
 			.then(res => {
 				if(res.code === 10000){
 					message.success('修改成功')
-				}else{
-					message.success(res.msg)
 				}
 			})
 	}

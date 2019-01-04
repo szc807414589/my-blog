@@ -68,7 +68,7 @@ class HeaderBar extends Component {
 	getUserInfo() {
 		this.props.getUserInfo()
 			.then(res => {
-				if (res.msg === 'success') {
+				if (res.success) {
 					this.setState({
 						isLogin: true,
 						userInfo: res.data
