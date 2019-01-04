@@ -1,5 +1,5 @@
 import Article from '../model/article'
-import codeData from '../code'
+import { errMsg } from '../code'
 import BaseComponent from '../utils'
 
 class article extends BaseComponent {
@@ -54,15 +54,10 @@ class article extends BaseComponent {
 	getArticleList(req, res) {
 		Article.find({}, (err, doc) => {
 			if (err) {
-				return res.json({
-					code: 99999,
-					msg: codeData[99999],
-					data: doc
-				})
+				return res.json(errMsg.BACKEND_ERR)
 			} else {
 				return res.json({
-					code: 10000,
-					msg: codeData[10000],
+					...errMsg.SUCCESS,
 					data: doc
 				})
 			}

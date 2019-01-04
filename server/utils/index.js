@@ -19,7 +19,8 @@ export default class BaseComponent {
 			return idData[type]
 		} catch (err) {
 			console.log('获取ID数据失败')
-			throw new Error(err)
+			return '获取ID数据失败'
+			// throw new Error(err)
 		}
 	}
 }
