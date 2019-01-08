@@ -21,5 +21,11 @@ module.exports = function override(config, env) {
 		modifyVars: getLessVars(path.join(__dirname, './src/styles/vars.less')),
 		javascriptEnabled: true,
 	})(config, env)
+	
+	
+	//外置moment
+	// config.externals = {
+	// 	moment: 'moment'
+	// }
 	return config
 };

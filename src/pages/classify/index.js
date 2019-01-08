@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ColorPicker from '../../components/colorPicker'
 
 
 export default class Classify extends Component {

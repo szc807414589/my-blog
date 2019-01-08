@@ -6,7 +6,7 @@ import {createStore,applyMiddleware,compose} from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 // 利用redux-logger打印日志
-import {createLogger} from 'redux-logger'
+// import {createLogger} from 'redux-logger'
 import './index.css';
 import './assets/css/reset.less'
 import * as serviceWorker from './serviceWorker';

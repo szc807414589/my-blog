@@ -45,10 +45,11 @@ class Home extends Component {
 						listData: data
 					})
 				}
-				
 			})
 	}
-	
+	jumpToDetail(id){
+		history.push(`/article/detail?articleId=${id}`)
+	}
 	render() {
 		const list = this.state.listData
 		
@@ -70,7 +71,7 @@ class Home extends Component {
 									<IconText type="like-o" text={item.articleSupportedNumber}/>,
 									<IconText type="message" text={item.articleCommentNumber}/>
 								]}
-								onClick={()=>{history.push('/article/detail')}}
+								onClick={()=>{this.jumpToDetail(item.articleId)}}
 								extra={
 									item.articleThumbnail ?
 										<img width={272}
