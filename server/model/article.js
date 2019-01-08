@@ -8,13 +8,14 @@ const article = new Schema({
 	articleDesc: { type: String, default: '' },
 	articleContent: { type: String, default: '' },
 	articleCreateTime: { type: Date, default: Date.now() },
-	articleUpdateTime: { type: Date, default: '' },
 	articleSupportedNumber: { type: Number, default: 0 },
 	articleCollectedNumber: { type: Number, default: 0 },
 	articleCommentNumber: { type: Number, default: 0 },
 	articleAuth: { type: String, default: '' },
 	articleComment: { type: Array },
-	articleThumbnail: { type: String, default: '' }
+	articleThumbnail: { type: String, default: '' },
+	articleUpdateTime: { type: Date, default: Date.now() },
+	userId: { type: Number },
 })
 
 const Article = mongoose.model('article', article)

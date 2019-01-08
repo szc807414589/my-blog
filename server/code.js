@@ -34,6 +34,16 @@ export const errMsg = {
 		msg: '用户名不能为空',
 		success: false
 	},
+	ERROR_DATA:{
+		code: 99997,
+		msg: '获取数据失败',
+		success: false
+	},
+	MISS_ARG:{
+		code: 99998,
+		msg: '缺少参数',
+		success: false
+	},
 	BACKEND_ERR:{
 		code: 99999,
 		msg: '后端错误',

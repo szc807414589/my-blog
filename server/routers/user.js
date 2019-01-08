@@ -63,11 +63,7 @@ class user extends BaseComponent {
 			userId = await that.getId('userId')
 		} catch (err) {
 			console.log('获取用户id失败')
-			res.json({
-				type: 'ERROR_DATA',
-				message: '获取数据失败'
-			})
-			return
+			return res.json(errMsg.ERROR_DATA)
 		}
 		const { user, pwd } = req.body
 		User.findOne({ user }, { 'pwd': 0, __v: 0 }, async (err, doc) => {
