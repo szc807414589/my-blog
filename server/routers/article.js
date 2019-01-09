@@ -75,6 +75,10 @@ class article extends BaseComponent {
 	}
 	
 	async getArticleById(req, res) {
+		const {articleId} = req.body
+		if(!articleId){
+			return res.json(errMsg.MISS_ARG)
+		}
 		try {
 			const { articleId } = req.body
 			const article = await Article.findOne({ articleId })
