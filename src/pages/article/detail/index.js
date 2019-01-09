@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Avatar, Button } from "../../../components/ui/index"
-import {Input} from 'antd'
+// import { Avatar, } from "../../../components/ui/index"
+import { Avatar, Input, Button, Popover, Icon } from 'antd'
 import 'highlight.js/styles/atom-one-dark.css'
 
 import api from "../../../assets/js/axios/api"
@@ -10,7 +10,12 @@ import 'highlight.js/styles/monokai-sublime.css'
 import 'react-quill/dist/quill.snow.css'
 import './detail.less'
 
-const {TextArea } = Input
+const { TextArea } = Input
+const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
+	.split(' ')
+	.filter(v => v)
+	.map(v => ({ text: v }))
+
 
 class Auth extends Component {
 	constructor(props) {
@@ -65,24 +70,120 @@ class Desc extends Component {
 }
 
 class MyComment extends Component {
-	render(){
-		return(
-			<div>
-				<Avatar/>
-				<div>
-					<TextArea placeholder="输入你的评论" autosize={true}/>
-					<div>
-						<div>表情</div>
-						<Button>发送</Button>
+	constructor(props) {
+		super(props)
+		this.state = {
+			show: false,
+			commentValue: '',
+			defaultAvatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+		}
+		this.handleInput = this.handleInput.bind(this)
+		this.handleClick = this.handleClick.bind(this)
+	}
+	
+	handleInput(e) {
+		let k = e.target.name
+		this.setState({
+			[k]: e.target.value
+		})
+	}
+	
+	clickEmoji(e) {
+		e.preventDefault()
+	}
+	
+	handleClick() {
+		console.log(this.state.commentValue)
+		this.setState({ commentValue: '' })
+	}
+	
+	render() {
+		const { show, commentValue, defaultAvatar } = this.state
+		return (
+			<div className={"myCommentBox"}>
+				<TextArea
+					placeholder="输入你的评论"
+					onFocus={() => {
+						this.setState({ show: true })
+					}}
+					onBlur={() => {
+						this.setState({ show: false })
+					}}
+					onChange={this.handleInput}
+					name={"commentValue"}
+					autosize={true}
+					value={commentValue}
+				/>
+				{
+					<div className={show || commentValue ? "buttonBox open" : "buttonBox close"}>
+						<Popover
+							placement="bottom"
+							title={"表情"}
+							content={
+								<div className={"emojiPanel"}>
+									{
+										emoji.map((v, i) => (
+											<div
+												className={"emojiGrid"}
+												key={i}
+												onClick={() => {
+													this.setState({
+														commentValue: this.state.commentValue + v.text
+													})
+												}}
+											>
+												{v.text}
+											</div>
+										))
+									}
+								</div>
+							}
+							trigger="click"
+						>
+							<div className={"emoji"}
+							     onMouseDown={this.clickEmoji}
+							>
+								😀
+							</div>
+						</Popover>
+						<Button
+							className={"fr"}
+							onMouseDown={this.handleClick}
+							disabled={commentValue ? false : true}
+						>发送</Button>
 					</div>
-				</div>
+				}
 			</div>
 		)
 	}
 }
 
 class CommentList extends Component {
-
+	render() {
+		return (
+			<div className={"commentListContainer"}>
+				<Avatar/>
+				<div className={"commentInfo"}>
+					<div className={"commentUserInfo"}>
+						<span className={"commentUserName"}>user1 </span>
+						<span className={"commentUserDesc"}>this is desc this is desc this is desc this is desc this is desc</span>
+					</div>
+					<div className={"commentContent"}>
+						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
+						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
+						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
+					</div>
+					<div className={"commentFooter"}>
+						<span>2019-01-01 16:14:00</span>
+						<div className={"fr"}>
+							<Icon type="like"/>
+							<Icon type="message"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
 }
 
 class Detail extends Component {
@@ -153,13 +254,28 @@ class Detail extends Component {
 		let authInfo = { userAvatar, articleAuth, articleCreateTime, articleCommentNumber, articleSupportedNumber }
 		return (
 			<div className="detailContainer">
-				<h3>{articleTitle}</h3>
-				<Auth authInfo={authInfo} followAuthClick={this.followAuthClick}/>
-				<Desc articleDesc={articleDesc}/>
-				<div className="articleContent">
-					<div dangerouslySetInnerHTML={{ __html: articleContent }}></div>
+				<div className={"articleContainer"}>
+					<h3>{articleTitle}</h3>
+					<Auth authInfo={authInfo} followAuthClick={this.followAuthClick}/>
+					<Desc articleDesc={articleDesc}/>
+					<div className="articleContent">
+						<div dangerouslySetInnerHTML={{ __html: articleContent }}></div>
+					</div>
 				</div>
-				<MyComment/>
+				<div className={"commentContainer"}>
+					<div className={"commentTitle"}> 评论</div>
+					<div className={"comment_my"}>
+						<Avatar/>
+						<MyComment/>
+					</div>
+					<div className={"commentList"}>
+						<CommentList/>
+						<CommentList/>
+						<CommentList/>
+						<CommentList/>
+						<CommentList/>
+					</div>
+				</div>
 			</div>
 		)
 	}
