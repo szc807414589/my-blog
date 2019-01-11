@@ -1,5 +1,5 @@
 .detailContainer {
-  .articleContainer{
+  .articleContainer {
     h3 {
       word-break: break-word !important;
       margin: 20px 0 0;
@@ -34,18 +34,40 @@
     }
   }
   .commentContainer {
-    background-color: #fafbfc;
-    padding: 10px;
-    .ant-avatar{
+    .commentTitle {
+      color: #8a9aa9;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: center;
+      padding: 20px 0 5px;
+    }
+    .ant-avatar {
       vertical-align: top;
+    }
+    .comment_my {
+      padding: 20px 20px 10px;
+      background-color: #fafbfc;
+      display: flex;
+      position: relative;
+      border-radius: 3px;
+      .avatarBox {
+        flex: 0 0 auto;
+      }
+      .commentBox {
+        flex: 1 1 auto;
+        margin-left: 10px;
+      }
+    }
+    .commentList{
+      width: 800px;
+      margin: 0 auto;
     }
   }
   .myCommentBox {
-    display: inline-block;
-    margin-left: 10px;
+    //margin-left: 10px;
     textarea {
-      width: 800px;
-      height: 300px;
+      //width: 800px;
+      //height: 300px;
       resize: none
     }
     .buttonBox {
@@ -69,48 +91,64 @@
     }
   }
 }
-.commentListContainer{
-  padding: 10px 0;
-  .ant-avatar{
-    vertical-align: top;
-  }
-  .commentInfo{
-    display: inline-block;
-    width: 800px;
-    padding: 0 10px 20px;
-    border-bottom: 1px solid #f1f1f1;
-    .commentUserInfo{
-      .commentUserName{
-        color: #333333;
-      }
-      .commentUserDesc{
-        color: #8a9aa9;
-        vertical-align: bottom;
-        display: inline-block;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-        margin-left: 5px;
-        width: 100px;
-      }
-    }
-    .commentContent{
-      margin-top: 8px;
-      font-size: 14px;
-      line-height: 20px;
-      white-space: pre-wrap;
-      color: #505050;
-    }
-    .commentFooter{
-      margin-top: 10px;
-      .anticon{
-        margin-right: 10px;
-        cursor: pointer;
-      }
-    }
-  }
-}
 
+.commentListContainer {
+  .commentItem{
+    padding: 10px 0 0;
+    display: flex;
+    .ant-avatar {
+      vertical-align: top;
+      flex: 0 0 auto;
+    }
+    .commentInfo {
+      flex: 1 1 auto;
+      padding: 0 10px 20px;
+      border-bottom: 1px solid #f1f1f1;
+      .commentUserInfo {
+        .commentUserName {
+          color: #333333;
+        }
+        .commentUserDesc {
+          color: #8a9aa9;
+          vertical-align: bottom;
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-left: 5px;
+          width: 100px;
+        }
+      }
+      .commentContent {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 20px;
+        white-space: pre-wrap;
+        color: #505050;
+      }
+      .commentFooter {
+        margin-top: 10px;
+        .anticon {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+        .anticon {
+          font-size: 20px;
+        }
+      }
+      .recCommentBox{
+        margin: 10px 0 0;
+        padding: 0 0 0 10px;
+        background-color: #fafbfc;
+        border-radius: 3px;
+      }
+      .myCommentBox{
+        margin-top: 20px;
+      }
+    }
+  }
+
+}
 
 .authInfo {
   margin: 30px 0 40px;
@@ -150,15 +188,12 @@
   line-height: 30px;
 }
 
-
-
-
-.emojiPanel{
+.emojiPanel {
   width: 281px;
   height: 181px;
   border-top: 1px solid #2f2f2f;
   border-left: 1px solid #2f2f2f;
-  .emojiGrid{
+  .emojiGrid {
     cursor: pointer;
     width: 20px;
     height: 20px;

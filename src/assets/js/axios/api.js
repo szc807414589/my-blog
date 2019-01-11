@@ -6,6 +6,11 @@ const api = {
 	
 	GetArticleList:'/article/getArticleList',
 	addArticle:'/article/addArticle',
-	GetArticleById:'/article/getArticleById'
+	GetArticleById:'/article/getArticleById',
+	
+	
+	GetCommentList:'/comment/getCommentList',
+	AddComment:'/comment/addComment',
+	GetCommentListByArticleId:'/comment/getCommentListByArticleId',
 }
 export default api

@@ -93,7 +93,7 @@ class MyComment extends Component {
 	}
 	
 	handleClick() {
-		console.log(this.state.commentValue)
+		this.props.submitComment(this.state.commentValue)
 		this.setState({ commentValue: '' })
 	}
 	
@@ -159,27 +159,53 @@ class MyComment extends Component {
 }
 
 class CommentList extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			flag: false
+		}
+	}
+	
 	render() {
+		const v = this.props.commentData
 		return (
 			<div className={"commentListContainer"}>
-				<Avatar/>
-				<div className={"commentInfo"}>
-					<div className={"commentUserInfo"}>
-						<span className={"commentUserName"}>user1 </span>
-						<span className={"commentUserDesc"}>this is desc this is desc this is desc this is desc this is desc</span>
-					</div>
-					<div className={"commentContent"}>
-						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
-						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
-						这里是评论内容这里是评论内容这里是评论内容这里是评论内容这里是评论内容
-					</div>
-					<div className={"commentFooter"}>
-						<span>2019-01-01 16:14:00</span>
-						<div className={"fr"}>
-							<Icon type="like"/>
-							<Icon type="message"/>
+				<div className={"commentItem"} key={v.commentId}>
+					<Avatar src={v.userInfo[0].userAvatar}/>
+					<div className={"commentInfo"}>
+						<div className={"commentUserInfo"}>
+							<span className={"commentUserName"}>{v.userInfo[0].user} </span>
+							<span className={"commentUserDesc"}>
+										this is desc this is desc this is desc this is desc this is desc
+									</span>
+						</div>
+						<div className={"commentContent"}>
+							{v.commentContent}
+						</div>
+						<div className={"commentFooter"}>
+							<span>{moment(v.commentCreateTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+							<div className={"fr"}>
+								{v.isLiked ?
+										<Icon type="like" theme="twoTone" twoToneColor="#eb2f96"/> :
+										<Icon type="like"/>}{v.likesCount}
+								
+								<Icon type="message" onClick={() => {
+									this.setState({ flag: !this.state.flag })
+								}}/>
+							</div>
+						</div>
+						{
+							this.state.flag ?
+								<MyComment/>
+								: null
+						}
+						<div className={"recCommentBox"}>
+							{
+								this.props.children
+							}
 						</div>
 					</div>
+				
 				</div>
 			</div>
 		)
@@ -207,9 +233,12 @@ class Detail extends Component {
 				user: "",
 				userAvatar: '',
 				userDesc: "",
-			}
+			},
+			commentArr:[],
 		}
 		this.getArticle = this.getArticle.bind(this)
+		this.submitComment = this.submitComment.bind(this)
+		this.getCommentListByArticleId = this.getCommentListByArticleId.bind(this)
 	}
 	
 	componentWillMount() {
@@ -221,8 +250,15 @@ class Detail extends Component {
 	
 	componentDidMount() {
 		this.getArticle()
+		this.getCommentList()
+		this.getCommentListByArticleId()
 	}
-	
+	getCommentList(){
+		postApi(api.GetCommentList, {  })
+			.then(res => {
+			
+			})
+	}
 	getArticle() {
 		let that = this
 		postApi(api.GetArticleById, { articleId: this.state.articleId })
@@ -235,7 +271,30 @@ class Detail extends Component {
 				}
 			})
 	}
-	
+	getCommentListByArticleId(){
+		postApi(api.GetCommentListByArticleId, {
+			articleId:this.state.articleId
+		})
+			.then(res => {
+				if(res.success){
+					this.setState({
+						commentArr:res.data
+					})
+				}
+			})
+	}
+	submitComment(commentContent){
+		let that = this
+		postApi(api.AddComment, {
+			commentContent,
+			articleId:that.state.articleId
+		})
+			.then(res => {
+				if(res.success){
+					that.getCommentListByArticleId()
+				}
+			})
+	}
 	followAuthClick() {
 		console.log('followAutoClick')
 	}
@@ -251,7 +310,15 @@ class Detail extends Component {
 			articleCommentNumber,
 			articleSupportedNumber
 		} = this.state.articleInfo
-		let authInfo = { userAvatar, articleAuth, articleCreateTime, articleCommentNumber, articleSupportedNumber }
+		let authInfo = {
+			userAvatar,
+			articleAuth,
+			articleCreateTime,
+			articleCommentNumber,
+			articleSupportedNumber
+		}
+		
+		const commentArr = this.state.commentArr
 		return (
 			<div className="detailContainer">
 				<div className={"articleContainer"}>
@@ -259,26 +326,47 @@ class Detail extends Component {
 					<Auth authInfo={authInfo} followAuthClick={this.followAuthClick}/>
 					<Desc articleDesc={articleDesc}/>
 					<div className="articleContent">
-						<div dangerouslySetInnerHTML={{ __html: articleContent }}></div>
+						<div dangerouslySetInnerHTML={{ __html: articleContent }}>
+						</div>
 					</div>
 				</div>
 				<div className={"commentContainer"}>
 					<div className={"commentTitle"}> 评论</div>
 					<div className={"comment_my"}>
-						<Avatar/>
-						<MyComment/>
+						<div className={"avatarBox"}>
+							<Avatar/>
+						</div>
+						<div className={"commentBox"}>
+							<MyComment
+								submitComment={this.submitComment}
+							/>
+						</div>
 					</div>
 					<div className={"commentList"}>
-						<CommentList/>
-						<CommentList/>
-						<CommentList/>
-						<CommentList/>
-						<CommentList/>
+						{
+							commentArr.map(v => {
+								if (v.recComment.length) {
+									return (
+										<CommentList commentData={v} key={v.commentId}>
+											{
+												v.recComment.map(c => (
+													<CommentList commentData={c} key={c.commentId}/>
+												))
+											}
+										</CommentList>
+									)
+								} else {
+									return (
+										<CommentList commentData={v} key={v.commentId}/>
+									)
+								}
+							})
+						}
+					
 					</div>
 				</div>
 			</div>
 		)
 	}
 }
-
 export default Detail
