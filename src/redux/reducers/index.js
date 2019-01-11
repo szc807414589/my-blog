@@ -43,8 +43,8 @@ const auth = (state = {user: 'xixixi', isAuth: false}, action) => {
 	}
 }
 
-export default combineReducers({
-	todos,
-	visibilityFilter,
-	auth
-})
+// export default combineReducers({
+// 	todos,
+// 	visibilityFilter,
+// 	auth
+// })
