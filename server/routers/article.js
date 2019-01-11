@@ -22,7 +22,6 @@ class article extends BaseComponent {
 		try {
 			articleId = await that.getId('articleId')
 		} catch (err) {
-			console.log(err)
 			console.log('获取文章id失败')
 			return res.json(errMsg.ERROR_DATA)
 		}
@@ -85,7 +84,6 @@ class article extends BaseComponent {
 			const { userId } = article
 			const user = await User.findOne({ userId })
 			let articleinfo = { ...article._doc,...user._doc }
-			console.log(articleinfo)
 			return res.json({ ...errMsg.SUCCESS, data:articleinfo  })
 		} catch (e) {
 			return e
