@@ -46,7 +46,6 @@ class user extends BaseComponent {
 			{ user, userDesc },
 			{ new: true },
 			(err, doc) => {
-				console.log(doc)
 				if (err) {
 					return res.json(errMsg.USER_MODIFY_ERR)
 				}
