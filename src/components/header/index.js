@@ -4,7 +4,6 @@ import { Avatar } from '../ui'
 import ColorPicker from '../colorPicker'
 
 import history from '../../history'
-import { postApi } from "../../assets/js/axios"
 import intl from 'react-intl-universal'
 import './header.less'
 import { getUserInfo, register } from '../../redux/actions/user.action'
@@ -50,7 +49,6 @@ class HeaderBar extends Component {
 	
 	componentDidMount() {
 		this.getUserInfo()
-		
 	}
 	
 	handleVisibleChange(flag) {
@@ -152,7 +150,8 @@ class HeaderBar extends Component {
 							<Button
 								onClick={
 									() => {
-										history.push('/login?path=' + window.location.pathname)
+										let path = window.location.href.split(window.location.origin)[1]
+										history.push('/login?path=' + path)
 									}
 								}
 								className="header_login"

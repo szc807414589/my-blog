@@ -11,6 +11,7 @@ const api = {
 	
 	GetCommentList:'/comment/getCommentList',
 	AddComment:'/comment/addComment',
+	AddCommentToUser:'/comment/addCommentToUser',
 	GetCommentListByArticleId:'/comment/getCommentListByArticleId',
 }
 export default api

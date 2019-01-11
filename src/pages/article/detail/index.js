@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-// import { Avatar, } from "../../../components/ui/index"
 import { Avatar, Input, Button, Popover, Icon } from 'antd'
 import 'highlight.js/styles/atom-one-dark.css'
-
 import api from "../../../assets/js/axios/api"
 import { postApi } from "../../../assets/js/axios"
 import moment from 'moment'
 import 'highlight.js/styles/monokai-sublime.css'
 import 'react-quill/dist/quill.snow.css'
 import './detail.less'
+import { connect } from 'react-redux'
+import { get_CommentList } from "./redux/comment.action"
+
 
 const { TextArea } = Input
 const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
@@ -81,6 +82,11 @@ class MyComment extends Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 	
+	componentDidMount() {
+		console.log(this.props.recUserId)
+		console.log(this.props.recCommentId)
+	}
+	
 	handleInput(e) {
 		let k = e.target.name
 		this.setState({
@@ -93,12 +99,13 @@ class MyComment extends Component {
 	}
 	
 	handleClick() {
-		this.props.submitComment(this.state.commentValue)
+		this.props.getCommentContent(this.state.commentValue, this.props.recUserId, this.props.recCommentId)
 		this.setState({ commentValue: '' })
 	}
 	
 	render() {
 		const { show, commentValue, defaultAvatar } = this.state
+		
 		return (
 			<div className={"myCommentBox"}>
 				<TextArea
@@ -162,8 +169,15 @@ class CommentList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			flag: false
+			flag: false,
+			commentContent: ''
 		}
+		this.getCommentContent = this.getCommentContent.bind(this)
+	}
+	
+	getCommentContent(commentContent) {
+		// this.setState({ commentContent })
+		this.props.getCommentContent(commentContent)
 	}
 	
 	render() {
@@ -171,13 +185,13 @@ class CommentList extends Component {
 		return (
 			<div className={"commentListContainer"}>
 				<div className={"commentItem"} key={v.commentId}>
-					<Avatar src={v.userInfo[0].userAvatar}/>
+					<Avatar src={v.userInfo.userAvatar}/>
 					<div className={"commentInfo"}>
 						<div className={"commentUserInfo"}>
-							<span className={"commentUserName"}>{v.userInfo[0].user} </span>
+							<span className={"commentUserName"}>{v.userInfo.user} </span>
 							<span className={"commentUserDesc"}>
-										this is desc this is desc this is desc this is desc this is desc
-									</span>
+								this is desc this is desc this is desc this is desc this is desc
+							</span>
 						</div>
 						<div className={"commentContent"}>
 							{v.commentContent}
@@ -185,19 +199,27 @@ class CommentList extends Component {
 						<div className={"commentFooter"}>
 							<span>{moment(v.commentCreateTime).format('YYYY-MM-DD HH:mm:ss')}</span>
 							<div className={"fr"}>
-								{v.isLiked ?
+								{
+									v.isLiked ?
 										<Icon type="like" theme="twoTone" twoToneColor="#eb2f96"/> :
-										<Icon type="like"/>}{v.likesCount}
-								
-								<Icon type="message" onClick={() => {
-									this.setState({ flag: !this.state.flag })
-								}}/>
+										<Icon type="like"/>}{v.likesCount
+							}
+								<Icon
+									type="message"
+									onClick={() => {
+										this.setState({ flag: !this.state.flag })
+									}}
+								/>
 							</div>
 						</div>
 						{
 							this.state.flag ?
-								<MyComment/>
-								: null
+								<MyComment
+									getCommentContent={this.getCommentContent}
+									recUserId={v.userInfo.userId}
+									recCommentId={v.commentId}
+								/> :
+								null
 						}
 						<div className={"recCommentBox"}>
 							{
@@ -234,11 +256,14 @@ class Detail extends Component {
 				userAvatar: '',
 				userDesc: "",
 			},
-			commentArr:[],
+			commentArr: [],
+			recUserId: 0,
+			recCommentId: 0,
 		}
 		this.getArticle = this.getArticle.bind(this)
 		this.submitComment = this.submitComment.bind(this)
 		this.getCommentListByArticleId = this.getCommentListByArticleId.bind(this)
+		this.submitCommentToUser = this.submitCommentToUser.bind(this)
 	}
 	
 	componentWillMount() {
@@ -253,12 +278,14 @@ class Detail extends Component {
 		this.getCommentList()
 		this.getCommentListByArticleId()
 	}
-	getCommentList(){
-		postApi(api.GetCommentList, {  })
+	
+	getCommentList() {
+		postApi(api.GetCommentList, {})
 			.then(res => {
 			
 			})
 	}
+	
 	getArticle() {
 		let that = this
 		postApi(api.GetArticleById, { articleId: this.state.articleId })
@@ -271,30 +298,52 @@ class Detail extends Component {
 				}
 			})
 	}
-	getCommentListByArticleId(){
-		postApi(api.GetCommentListByArticleId, {
-			articleId:this.state.articleId
-		})
+	
+	getCommentListByArticleId() {
+		// postApi(api.GetCommentListByArticleId, {
+		// 	articleId: this.state.articleId
+		// })
+		// 	.then(res => {
+		// 		if (res.success) {
+		// 			this.setState({
+		// 				commentArr: res.data
+		// 			})
+		// 		}
+		// 	})
+		this.props.get_CommentList(this.state.articleId)
 			.then(res => {
-				if(res.success){
+				if (res.success) {
 					this.setState({
-						commentArr:res.data
+						commentArr: res.data
 					})
 				}
 			})
 	}
-	submitComment(commentContent){
-		let that = this
+	
+	submitComment(commentContent, recUserId, recCommentId) {
+		console.log(commentContent)
+		console.log(recUserId)
+		console.log(recCommentId)
+		
+		/*let that = this
 		postApi(api.AddComment, {
 			commentContent,
-			articleId:that.state.articleId
+			articleId: that.state.articleId
 		})
 			.then(res => {
-				if(res.success){
+				if (res.success) {
 					that.getCommentListByArticleId()
 				}
-			})
+			})*/
 	}
+	
+	/*获取评论的recUserId,recCommentId*/
+	submitCommentToUser(recUserId, recCommentId) {
+		this.setState({
+			recUserId, recCommentId
+		})
+	}
+	
 	followAuthClick() {
 		console.log('followAutoClick')
 	}
@@ -338,7 +387,7 @@ class Detail extends Component {
 						</div>
 						<div className={"commentBox"}>
 							<MyComment
-								submitComment={this.submitComment}
+								getCommentContent={this.submitComment}
 							/>
 						</div>
 					</div>
@@ -347,26 +396,38 @@ class Detail extends Component {
 							commentArr.map(v => {
 								if (v.recComment.length) {
 									return (
-										<CommentList commentData={v} key={v.commentId}>
+										<CommentList submitCommentToUser={this.submitCommentToUser}
+										             commentData={v}
+										             key={v.commentId}>
 											{
 												v.recComment.map(c => (
-													<CommentList commentData={c} key={c.commentId}/>
+													<CommentList submitCommentToUser={this.submitCommentToUser}
+													             commentData={c}
+													             key={c.commentId}/>
 												))
 											}
 										</CommentList>
 									)
 								} else {
 									return (
-										<CommentList commentData={v} key={v.commentId}/>
+										<CommentList submitCommentToUser={this.submitCommentToUser}
+										             commentData={v}
+										             key={v.commentId}/>
 									)
 								}
 							})
 						}
-					
 					</div>
 				</div>
 			</div>
 		)
 	}
 }
-export default Detail
+
+export default connect(
+	// state => ({
+	// 	comment: state.list,
+	// }),
+	state => state.comment,
+	{ get_CommentList }
+)(Detail)
