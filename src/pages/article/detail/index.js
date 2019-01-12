@@ -325,16 +325,16 @@ class Detail extends Component {
 		console.log(recUserId)
 		console.log(recCommentId)
 		
-		/*let that = this
-		postApi(api.AddComment, {
-			commentContent,
-			articleId: that.state.articleId
-		})
-			.then(res => {
-				if (res.success) {
-					that.getCommentListByArticleId()
-				}
-			})*/
+		// let that = this
+		// postApi(api.AddComment, {
+		// 	commentContent,
+		// 	articleId: that.state.articleId
+		// })
+		// 	.then(res => {
+		// 		if (res.success) {
+		// 			that.getCommentListByArticleId()
+		// 		}
+		// 	})
 	}
 	
 	/*获取评论的recUserId,recCommentId*/
