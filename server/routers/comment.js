@@ -1,4 +1,5 @@
 import Comment from '../model/comment'
+import CommentToUser from '../model/commentToUser'
 import User from '../model/user'
 import Article from '../model/article'
 import { errMsg } from "../code"
@@ -35,7 +36,7 @@ class comment extends BaseComponent {
 			console.log('获取评论id失败')
 			return res.json(errMsg.ERROR_DATA)
 		}
-		/*userId*/
+		/*userKey*/
 		if (!userKey) {
 			return res.json(errMsg.NOT_LOGIN)
 		}

@@ -8,8 +8,11 @@ const initState = {
 export const comment = (state = initState, action) => {
 	switch (action.type) {
 		case COMMENT_LIST:
+		console.log('====================================');
+		console.log(state);
+		console.log('====================================');
 			return {
-				...state,
+				// ...state.comment,
 				...action.payload
 			}
 		case ADD_COMMENT:

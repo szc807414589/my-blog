@@ -15,7 +15,7 @@ export const getCommentList = commentList => ({
 })
 export const addComment = list => ({
 	type:ADD_COMMENT,
-	list
+	payload:list
 })
 
 
@@ -23,7 +23,7 @@ export const add_comment = (commentContent, articleId) => {
 	return dispatch => {
 		return postApi(api.AddComment, { commentContent, articleId })
 			.then(res => {
-				dispatch(res.data)
+				dispatch(addComment(res))
 				return Promise.resolve(res)
 			})
 	}

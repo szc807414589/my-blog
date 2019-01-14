@@ -10,19 +10,6 @@ export default class BaseComponent {
 			console.log('id类型错误')
 			return 'id类型错误'
 		}
-		/*try {
-			const idData = await Ids.findOne()
-			console.log(idData)
-			idData[type]++
-			await idData.save()
-			console.log('=========================')
-			return idData[type]
-			
-		} catch (err) {
-			console.log(err)
-			console.log('获取ID数据失败')
-			return '获取ID数据失败'
-		}*/
 		let idData
 		//找出id
 		try {
