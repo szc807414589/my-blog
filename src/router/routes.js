@@ -50,6 +50,10 @@ const MyPage = Loadable({
 	loader: () => import("../pages/myPage"),
 	loading: loading
 });
+const YundaOrder = Loadable({
+	loader: () => import("../pages/yunda/order"),
+	loading: loading
+});
 
 
 class RouterModal extends Component {
@@ -95,6 +99,11 @@ const routes = [
 	{
 		path: '/register',
 		component: Register,
+		requiresAuth: false
+	},
+	{
+		path: '/yunda_order',
+		component: YundaOrder,
 		requiresAuth: false
 	},
 	{
