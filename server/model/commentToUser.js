@@ -13,8 +13,8 @@ const commentToUser = new Schema({
 	isLiked: { type: Boolean },//当前登录用户是否给他点赞
 	likesCount: { type: Number, default: 0 },//点赞数
 	commentUpdateTime: { type: Date, default: Date.now() },//评论更新时间
-	userId: { type: Number },//评论用户的id
-	userInfo: {}
+	userInfo: {},
+	articleId:{type:Number}
 })
 
 const CommentToUser = mongoose.model('commentToUser', commentToUser)
