@@ -55,19 +55,6 @@ export default class EditArticle extends Component {
 	
 	modules = {
 		toolbar: [
-			// ['bold', 'italic', 'underline', 'strike'],          // toggled buttons
-			// ['blockquote', 'code-block'],
-			// [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-			// [{ 'script': 'sub' }, { 'script': 'super' }],       // superscript/subscript
-			// [{ 'indent': '-1' }, { 'indent': '+1' }],           // outdent/indent
-			// [{ 'size': [] }],                                   // custom dropdown
-			// [{ 'header': [1, 2, 3, 4, 5, 6] }],
-			// [{ 'color': [] }, { 'background': [] }],            // dropdown with defaults from theme
-			// [{ 'font': [] }],
-			// [{ 'align': [] }],
-			// [ 'link', 'image', 'video', 'formula' ],
-			
-			
 			[{ 'font': [] }, { 'size': [] }],
 			[ 'bold', 'italic', 'underline', 'strike' ],
 			[{ 'color': [] }, { 'background': [] }],
@@ -112,13 +99,7 @@ export default class EditArticle extends Component {
 						value={this.state.articleContent}
 						modules={this.modules}
 						placeholder={'Write something...'}
-						// theme={this.state.theme}
-						// value={this.state.value}
-						// readOnly={this.state.readOnly}
 						onChange={this.onEditorChange}
-						// onChangeSelection={this.onEditorChangeSelection}
-						// onFocus={this.onEditorFocus}
-						// onBlur={this.onEditorBlur}
 					/>
 				</div>
 				<Button onClick={this.editSubmit}>提交</Button>

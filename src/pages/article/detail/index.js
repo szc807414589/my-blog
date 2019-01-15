@@ -119,12 +119,7 @@ class Detail extends Component {
 
     componentDidMount() {
         this.getArticle();
-        this.getCommentList();
         this.getCommentListByArticleId();
-    }
-
-    getCommentList() {
-        postApi(api.GetCommentList, {}).then(res => {});
     }
 
     getArticle() {
@@ -150,7 +145,7 @@ class Detail extends Component {
             }
         });
     }
-
+    /* 直接评论文章 */
     submitComment(commentValue, recUserId, recCommentId) {
         let that = this;
         that.props
@@ -164,15 +159,20 @@ class Detail extends Component {
             });
     }
 
-    /*获取评论的recUserId,recCommentId*/
-    submitCommentToUser(commentValue,recUserId, recCommentId) {
-		console.log(commentValue)
-		console.log(recUserId)
-		console.log(recCommentId)
-        // this.setState({
-        //     recUserId,
-        //     recCommentId
-        // });
+    /*给用户评论*/
+    submitCommentToUser(commentContent,recUserId, recCommentId) {
+        let that = this;
+        const articleId = this.state.articleId
+        postApi(api.AddCommentToUser,
+            {articleId,commentContent,recUserId, recCommentId}
+            )
+            .then(res=>{
+                if (res.success) {
+                    Message.success("添加成功", 1).then(() => {
+                        that.getCommentListByArticleId();
+                    });
+                }
+            })
     }
 
     followAuthClick() {
