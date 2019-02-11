@@ -6,7 +6,7 @@ const app = express()
 
 const Routers = require('./routers')
 
-const mongoose = require('./mongodb/index')
+const mongoose = require('./mongodb/mongoose')
 const db = mongoose()
 //cookie
 app.use(cookieParser())

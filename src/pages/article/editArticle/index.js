@@ -8,6 +8,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { postApi } from "../../../assets/js/axios"
 import api from "../../../assets/js/axios/api"
+import history from "../../../history";
 
 const { TextArea } = Input
 /*let EMPTY_DELTA = { ops: [] }*/
@@ -36,12 +37,9 @@ export default class EditArticle extends Component {
 		const { articleTitle, articleDesc, articleContent } = this.state
 		postApi(api.addArticle, {articleTitle,articleDesc,articleContent})
 			.then(res => {
-				// if (res.success) {
-				// 	const data = res.data
-				// 	this.setState({
-				// 		listData: data
-				// 	})
-				// }
+				if (res.success) {
+					history.push("/");
+				}
 				
 			})
 	}
@@ -103,9 +101,6 @@ export default class EditArticle extends Component {
 					/>
 				</div>
 				<Button onClick={this.editSubmit}>提交</Button>
-				<div dangerouslySetInnerHTML={{
-					__html: `${this.state.articleContent}`
-				}}/>
 			</div>
 		
 		)
