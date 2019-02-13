@@ -5,6 +5,7 @@ import api from "../../assets/js/axios/api";
 import InfiniteScroll from "react-infinite-scroller";
 import "./home.less";
 import history from "../../history";
+import { connect } from "react-redux";
 
 const { Meta } = Card;
 const IconText = ({ type, text }) => (
@@ -49,7 +50,8 @@ class Home extends Component {
     }
     render() {
         const list = this.state.listData;
-
+        const { user,userDesc,userAvatar } = this.props;
+        console.log(this.props);
         return (
             <Row className="home_container">
                 <Col xl={18} lg={24} className="left_content">
@@ -77,7 +79,6 @@ class Home extends Component {
                                         text={item.articleCommentNumber}
                                     />
                                 ]}
-                                
                                 extra={
                                     item.articleThumbnail ? (
                                         <img
@@ -92,9 +93,13 @@ class Home extends Component {
                             >
                                 <List.Item.Meta
                                     title={
-                                        <a onClick={() => {
-                                            this.jumpToDetail(item.articleId);
-                                        }}>
+                                        <a
+                                            onClick={() => {
+                                                this.jumpToDetail(
+                                                    item.articleId
+                                                );
+                                            }}
+                                        >
                                             {item.articleTitle}
                                         </a>
                                     }
@@ -120,10 +125,10 @@ class Home extends Component {
                     >
                         <Meta
                             avatar={
-                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                <Avatar src={userAvatar} />
                             }
-                            title="Card title"
-                            description="This is the description"
+                            title={user}
+                            description={userDesc}
                         />
                     </Card>
                     {/*热门文章*/}
@@ -159,4 +164,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default connect(state => state.user)(Home);
