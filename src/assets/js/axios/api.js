@@ -3,6 +3,7 @@ const api = {
 	Login:'/user/login',
 	UserInfo:'/user/userInfo',
 	ModifyUserInfo:'/user/modifyUserInfo',
+	Avatar:'/user/avatar',
 	
 	GetArticleList:'/article/getArticleList',
 	addArticle:'/article/addArticle',

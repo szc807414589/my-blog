@@ -161,6 +161,7 @@ class HeaderBar extends Component {
                                 history.push("/myPage");
                             }}
                         />
+                        
                     ) : (
                         <Button
                             onClick={() => {
@@ -176,6 +177,7 @@ class HeaderBar extends Component {
                             登录
                         </Button>
                     )}
+                    <a> 写文章</a>
                 </header>
             </div>
         );

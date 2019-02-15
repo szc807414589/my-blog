@@ -7,5 +7,6 @@ router.post('/user/userInfo',user.userInfo)
 router.post('/user/register',user.register)
 router.post('/user/login',user.login)
 router.post('/user/modifyUserInfo',user.modifyUserInfo)
+router.post('/user/avatar',user.avatar)
 
 module.exports = router
