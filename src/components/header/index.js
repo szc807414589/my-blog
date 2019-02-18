@@ -131,7 +131,7 @@ class HeaderBar extends Component {
                             <Icon type="smile" theme="twoTone" />
                             {intl.get("HOME")}
                         </Menu.Item>
-                        <Menu.Item key="/classify">
+                        <Menu.Item key="/chatlist">
                             <Icon type="appstore" />
                             {intl.get("MESSAGE")}
                         </Menu.Item>
