@@ -13,8 +13,8 @@ const About = Loadable({
     loader: () => import("../pages/about/index"),
     loading: loading
 });
-const Classify = Loadable({
-    loader: () => import("../pages/classify"),
+const ChatList = Loadable({
+    loader: () => import("../pages/chat"),
     loading: loading
 });
 const Login = Loadable({
@@ -111,8 +111,8 @@ const routes = [
                 requiresAuth: false
             },
             {
-                path: "/classify",
-                component: Classify,
+                path: "/chatlist",
+                component: ChatList,
                 requiresAuth: false
             },
             {
@@ -126,7 +126,7 @@ const routes = [
                 requiresAuth: true
             },
             {
-                path: "/myPage",
+                path: "/myPage/:userId?",
                 component: MyPage,
                 requiresAuth: true
             },

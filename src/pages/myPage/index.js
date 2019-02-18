@@ -75,6 +75,11 @@ class HeaderBlock extends Component {
 
     componentDidMount() {
         this.getList();
+        let userId = this.props.match.params.userId
+        console.log(userId)
+        this.setState({
+            userId
+        })
     }
 
     getList() {
