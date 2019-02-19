@@ -34,6 +34,20 @@ class user extends BaseComponent {
             }
         });
     }
+    getUserInfoById(req, res) {
+        const { userKey } = req.cookies;
+        const { userId } = req.body;
+        if (!userKey) {
+            return res.json(errMsg.NOT_LOGIN);
+        }
+        User.findOne({ userId: userId }, _filter, (err, doc) => {
+            if (err) {
+                return res.json(err);
+                // return res.json(errMsg.BACKEND_ERR);
+            }
+            return res.json({ ...errMsg.SUCCESS, data: doc });
+        });
+    }
 
     modifyUserInfo(req, res) {
         const { userKey } = req.cookies;
@@ -55,9 +69,9 @@ class user extends BaseComponent {
     }
 
     async avatar(req, res) {
-		const { userKey } = req.cookies;
-		const { userAvatar } = req.body;
-		User.findByIdAndUpdate(
+        const { userKey } = req.cookies;
+        const { userAvatar } = req.body;
+        User.findByIdAndUpdate(
             { _id: userKey },
             { userAvatar },
             { new: true },
@@ -68,7 +82,7 @@ class user extends BaseComponent {
                 return res.json({ ...errMsg.SUCCESS, data: doc });
             }
         );
-	}
+    }
 
     async register(req, res) {
         let that = this;
@@ -109,6 +123,15 @@ class user extends BaseComponent {
                 return res.json({ ...errMsg.SUCCESS, data: doc });
             }
         );
+    }
+
+    logout(req, res) {
+        const { userKey } = req.cookies;
+        if (!userKey) {
+            return res.json(errMsg.NOT_LOGIN);
+        }
+        res.clearCookie('userKey')
+        return res.json(errMsg.SUCCESS)
     }
 
     md5Pwd(pwd) {

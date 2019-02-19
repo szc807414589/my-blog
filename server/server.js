@@ -4,10 +4,7 @@ import cookieParser from 'cookie-parser'
 import Routers from './routers'
 import mongoose from './mongodb/mongoose'
 
-
-
 const app = express()
-
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
