@@ -50,7 +50,7 @@ class Home extends Component {
     }
     render() {
         const list = this.state.listData;
-        const { user,userDesc,userAvatar } = this.props;
+        const { user, userDesc, userAvatar } = this.props;
         console.log(this.props);
         return (
             <Row className="home_container">
@@ -65,7 +65,16 @@ class Home extends Component {
                             <List.Item
                                 key={item.articleTitle}
                                 actions={[
-                                    <Tag color="cyan">{item.articleAuth}</Tag>,
+                                    <Tag
+                                        color="cyan"
+                                        onClick={() => {
+                                            history.push(
+                                                "/myPage/" + item.userId
+                                            );
+                                        }}
+                                    >
+                                        {item.articleAuth}
+                                    </Tag>,
                                     <IconText
                                         type="star-o"
                                         text={item.articleCollectedNumber}
@@ -124,9 +133,7 @@ class Home extends Component {
                         ]}
                     >
                         <Meta
-                            avatar={
-                                <Avatar src={userAvatar} />
-                            }
+                            avatar={<Avatar src={userAvatar} />}
                             title={user}
                             description={userDesc}
                         />

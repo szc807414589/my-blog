@@ -5,7 +5,7 @@ import api from "../../assets/js/axios/api";
 import { postApi } from "../../assets/js/axios";
 import intl from "react-intl-universal";
 import history from "../../history";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 
 import "./myPage.less";
 
@@ -29,14 +29,9 @@ class HeaderBlock extends Component {
         const { userInfo } = this.props;
         return (
             <div className="header_block">
-                <Avatar
-                    src={userInfo.userAvatar}
-                    size="100"
-                />
+                <Avatar src={userInfo.userAvatar} size="100" />
                 <div className="header_box header_info">
-                    <div className="header_info_userName">
-                        {userInfo.userName}
-                    </div>
+                    <div className="header_info_userName">{userInfo.user}</div>
                     <div className="header_info_userDesc">
                         {userInfo.userDesc}
                     </div>
@@ -59,15 +54,13 @@ class HeaderBlock extends Component {
     }
 }
 
- class MyPage extends Component {
+class MyPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {
-                userName: this.props.user,
-                userDesc: this.props.userDesc,
-                userAvatar: this.props.userAvatar,
-            },
+            isOthers: false,
+            fromUserId: "",
+            userInfo: {},
             listData: []
         };
         this.getList = this.getList.bind(this);
@@ -75,11 +68,32 @@ class HeaderBlock extends Component {
 
     componentDidMount() {
         this.getList();
-        let userId = this.props.match.params.userId
-        console.log(userId)
+        let fromUserId = this.props.match.params.userId;
+        /* 
+            两个id存在且不相同为他人主页
+            else当前登陆用户
+        */
+        if (fromUserId && (fromUserId !== this.props.userId)) {
+            postApi(api.GetUserInfoById, { userId: fromUserId }).then(res => {
+                this.setState({
+                    isOthers: true,
+                    userInfo: res.data
+                });
+            });
+        } else {
+            const { user, userDesc, userAvatar } = this.props;
+            this.setState({
+                isOthers: false,
+                userInfo: {
+                    user,
+                    userDesc,
+                    userAvatar
+                }
+            });
+        }
         this.setState({
-            userId
-        })
+            fromUserId
+        });
     }
 
     getList() {
@@ -164,4 +178,4 @@ class HeaderBlock extends Component {
         );
     }
 }
-export default connect(state => state.user)(MyPage)
+export default connect(state => state.user)(MyPage);

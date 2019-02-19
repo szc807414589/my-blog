@@ -17,6 +17,8 @@ import intl from "react-intl-universal";
 import "./header.less";
 import { getUserInfo, register } from "../../redux/actions/user.action";
 import { connect } from "react-redux";
+import { postApi } from "../../assets/js/axios";
+import api from "../../assets/js/axios/api";
 
 const menu = (
     <Menu>
@@ -73,12 +75,9 @@ class HeaderBar extends Component {
     }
 
     handleClick = e => {
-        this.setState(
-            {current: e.key},
-            () => {
-                history.push(`${e.key}`);
-            }
-        );
+        this.setState({ current: e.key }, () => {
+            history.push(`${e.key}`);
+        });
     };
 
     getUserInfo() {
@@ -151,17 +150,50 @@ class HeaderBar extends Component {
                     </Select>
                     <ColorPicker />
                     {this.state.isLogin ? (
-                        <Avatar
-                            src={
-                                this.state.userInfo.userAvatar
-                                    ? this.state.userInfo.userAvatar
-                                    : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                            }
-                            onClick={() => {
-                                history.push("/myPage");
-                            }}
-                        />
-                        
+                        <Menu mode="horizontal">
+                            <Menu.SubMenu
+                                title={
+                                    <Avatar
+                                        src={
+                                            this.state.userInfo.userAvatar
+                                                ? this.state.userInfo.userAvatar
+                                                : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                        }
+                                    />
+                                }
+                            >
+                                <Menu.Item
+                                    key="setting:1"
+                                    onClick={() => {
+                                        history.push("/myPage");
+                                    }}
+                                >
+                                    我的主页
+                                </Menu.Item>
+                                <Menu.Item
+                                    key="setting:3"
+                                    onClick={() => {
+                                        history.push("/article/edit");
+                                    }}
+                                >
+                                    写文章
+                                </Menu.Item>
+                                <Menu.Item
+                                    key="setting:2"
+                                    onClick={() => {
+                                        postApi(api.Logout, {})
+                                        .then(res=>{
+                                            let path = window.location.href.split(
+                                                window.location.origin
+                                            )[1];
+                                            history.push('/login?path='+path)
+                                        })
+                                    }}
+                                >
+                                    退出登陆
+                                </Menu.Item>
+                            </Menu.SubMenu>
+                        </Menu>
                     ) : (
                         <Button
                             onClick={() => {
@@ -177,7 +209,6 @@ class HeaderBar extends Component {
                             登录
                         </Button>
                     )}
-                    <a> 写文章</a>
                 </header>
             </div>
         );

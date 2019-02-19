@@ -50,10 +50,6 @@ const MyPage = Loadable({
     loader: () => import("../pages/myPage"),
     loading: loading
 });
-const YundaOrder = Loadable({
-    loader: () => import("../pages/yunda/order"),
-    loading: loading
-});
 
 class RouterModal extends Component {
     constructor(props) {

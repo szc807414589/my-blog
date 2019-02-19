@@ -2,8 +2,10 @@ const api = {
 	Register:'/user/register',
 	Login:'/user/login',
 	UserInfo:'/user/userInfo',
+	GetUserInfoById:'/user/getUserInfoById',
 	ModifyUserInfo:'/user/modifyUserInfo',
 	Avatar:'/user/avatar',
+	Logout:'/user/logout',
 	
 	GetArticleList:'/article/getArticleList',
 	addArticle:'/article/addArticle',
