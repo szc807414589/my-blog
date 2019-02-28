@@ -7,6 +7,7 @@ const zh_CN = {
 	ABOUT:'关于',
 	FOLLOW:'关注',
 	EDIT:'编辑',
-	SEARCH:'搜索'
+	SEARCH:'搜索',
+	SENDMSG:'发消息'
 }
 export default zh_CN;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Avatar, Button, List } from "../../components/ui";
+import { Avatar, Button, List } from "antd";
 import { Tabs, Tag, Icon } from "antd";
 import api from "../../assets/js/axios/api";
 import { postApi } from "../../assets/js/axios";
@@ -19,17 +19,40 @@ const IconText = ({ type, text }) => (
 class HeaderBlock extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            listData: [],
-            lang: "en"
-        };
+        this.state = {};
     }
-
+    Color() {
+        let r = Math.floor(Math.random() * 128);
+        let g = Math.floor(Math.random() * 128);
+        let b = Math.floor(Math.random() * 128);
+        let bgcolor = "rgba(" + r + "," + g + "," + b + "," + ".8)";
+        let color =
+            "rgba(" + (r + 128) + "," + (g + 128) + "," + (b + 128) + "," + ".8)";
+        return [bgcolor, color];
+    }
     render() {
-        const { userInfo } = this.props;
+        const { userInfo, isOthers } = this.props;
+        let arr = this.Color();
         return (
             <div className="header_block">
-                <Avatar src={userInfo.userAvatar} size="100" />
+                {!userInfo.userAvatar ? (
+                    <Avatar
+                        src={userInfo.userAvatar}
+                        size={80}
+                    />
+                ) : (
+                    <Avatar
+                        style={{
+                            backgroundColor: arr[0],
+                            fontSize: 40,
+                            verticalAlign: "middle"
+                        }}
+                        size={80}
+                    >
+                        {userInfo.user.substr(0, 1)}
+                    </Avatar>
+                )}
+
                 <div className="header_box header_info">
                     <div className="header_info_userName">{userInfo.user}</div>
                     <div className="header_info_userDesc">
@@ -41,13 +64,17 @@ class HeaderBlock extends Component {
                         <span>{intl.get("FOLLOW")}|</span>
                         <span>{intl.get("FANS")}</span>
                     </div>
-                    <Button
-                        onClick={() => {
-                            history.push("/settings/user");
-                        }}
-                    >
-                        {intl.get("EDIT")}
-                    </Button>
+                    {isOthers ? (
+                        <Button type="dashed">{intl.get("SENDMSG")}</Button>
+                    ) : (
+                        <Button
+                            onClick={() => {
+                                history.push("/settings/user");
+                            }}
+                        >
+                            {intl.get("EDIT")}
+                        </Button>
+                    )}
                 </div>
             </div>
         );
@@ -73,7 +100,7 @@ class MyPage extends Component {
             两个id存在且不相同为他人主页
             else当前登陆用户
         */
-        if (fromUserId && (fromUserId !== this.props.userId)) {
+        if (fromUserId && fromUserId !== this.props.userId) {
             postApi(api.GetUserInfoById, { userId: fromUserId }).then(res => {
                 this.setState({
                     isOthers: true,
@@ -112,15 +139,18 @@ class MyPage extends Component {
     }
 
     render() {
-        const list = this.state.listData;
+        const { isOthers, listData } = this.state;
         return (
             <div>
-                <HeaderBlock userInfo={this.state.userInfo} />
+                <HeaderBlock
+                    userInfo={this.state.userInfo}
+                    isOthers={isOthers}
+                />
                 <Tabs defaultActiveKey="1" onChange={this.callback}>
                     <Tabs.TabPane tab="文章" key="1">
                         <List
                             bordered={true}
-                            dataSource={list}
+                            dataSource={listData}
                             itemLayout="vertical"
                             style={{ width: "700px" }}
                             renderItem={item => (

@@ -7,6 +7,7 @@ const ja_JP = {
 	ABOUT:'アバウト',
 	FOLLOW:'関心を持つ',
 	EDIT:'編集する',
-	SEARCH:'サーチ'
+	SEARCH:'サーチ',
+	SENDMSG:'ニュースを出す'
 }
 export default ja_JP;

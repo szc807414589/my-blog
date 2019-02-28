@@ -7,6 +7,7 @@ const en_US = {
 	ABOUT:'about',
 	FOLLOW:'follow',
 	EDIT:'edit',
-	SEARCH:'search'
+	SEARCH:'search',
+	SENDMSG:'send message'
 }
 export default en_US;
