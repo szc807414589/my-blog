@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
 import loading from "../components/loading";
-import { renderRoutes } from "react-router-config";
+// import { renderRoutes } from "react-router-config";
 import HeaderBar from "../components/header";
 import Content from "../components/content";
 
@@ -15,6 +15,10 @@ const About = Loadable({
 });
 const ChatList = Loadable({
     loader: () => import("../pages/chat"),
+    loading: loading
+});
+const ChatDetail = Loadable({
+    loader: () => import("../pages/chat/chatDetail"),
     loading: loading
 });
 const Login = Loadable({
@@ -33,7 +37,6 @@ const EditArticle = Loadable({
     loader: () => import("../pages/article/editArticle"),
     loading: loading
 });
-
 const Settings = Loadable({
     loader: () => import("../pages/settings"),
     loading: loading
@@ -56,29 +59,15 @@ class RouterModal extends Component {
         super(props);
     }
     render() {
-        const routerModal = routes.find(i => i.name === "needLogin");
         return (
             <div>
                 <HeaderBar />
-                <Content>{renderRoutes(routerModal.routes)}</Content>
+                <Content>{this.props.children}</Content>
             </div>
-        );
+        )
     }
 }
 
-class SettingsRoute extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        const settings = routes[2].routes.find(i => i.name === "settings");
-        return (
-            <div>
-                <Settings>{renderRoutes(settings.routes)}</Settings>
-            </div>
-        );
-    }
-}
 
 const routes = [
     {
@@ -107,9 +96,21 @@ const routes = [
                 requiresAuth: false
             },
             {
-                path: "/chatlist",
-                component: ChatList,
-                requiresAuth: false
+                path: "/chat",
+                requiresAuth: false,
+                name:'chat',
+                routes:[
+                    {
+                        path: "/chat/chatlist",
+                        component: ChatList,
+                        requiresAuth: false,
+                    },
+                    {
+                        path: "/chat/chatDetail",
+                        component: ChatDetail,
+                        requiresAuth: false,
+                    },
+                ]
             },
             {
                 path: "/article/detail",
@@ -127,7 +128,7 @@ const routes = [
                 requiresAuth: true
             },
             {
-                component: SettingsRoute,
+                component: Settings,
                 name: "settings",
                 routes: [
                     {

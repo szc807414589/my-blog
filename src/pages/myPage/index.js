@@ -21,38 +21,14 @@ class HeaderBlock extends Component {
         super(props);
         this.state = {};
     }
-    Color() {
-        let r = Math.floor(Math.random() * 128);
-        let g = Math.floor(Math.random() * 128);
-        let b = Math.floor(Math.random() * 128);
-        let bgcolor = "rgba(" + r + "," + g + "," + b + "," + ".8)";
-        let color =
-            "rgba(" + (r + 128) + "," + (g + 128) + "," + (b + 128) + "," + ".8)";
-        return [bgcolor, color];
-    }
     render() {
         const { userInfo, isOthers } = this.props;
-        let arr = this.Color();
         return (
             <div className="header_block">
-                {!userInfo.userAvatar ? (
-                    <Avatar
-                        src={userInfo.userAvatar}
-                        size={80}
-                    />
-                ) : (
-                    <Avatar
-                        style={{
-                            backgroundColor: arr[0],
-                            fontSize: 40,
-                            verticalAlign: "middle"
-                        }}
-                        size={80}
-                    >
-                        {userInfo.user.substr(0, 1)}
-                    </Avatar>
-                )}
-
+                <Avatar
+                    src={userInfo.userAvatar}
+                    size={80}
+                />
                 <div className="header_box header_info">
                     <div className="header_info_userName">{userInfo.user}</div>
                     <div className="header_info_userDesc">

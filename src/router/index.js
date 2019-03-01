@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import routes from './routes'
-import {renderRoutes} from 'react-router-config'
+// import {renderRoutes} from 'react-router-config'
+import renderRoutes from './config'
 import {Router} from 'react-router-dom'
 import history from '../history'
 /*
