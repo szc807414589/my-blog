@@ -1,5 +1,6 @@
 import React, {Component} from "react"
-import {Row,Col,Card} from 'antd'
+import {Row,Col,Card,Avatar,Popover} from 'antd'
+import {ChatBox} from '../../components/ui'
 
 const chatList = [
     {
@@ -37,7 +38,14 @@ class ChatDetail extends Component {
                             title={"聊天"}
                         >
                             <div>
-                                
+                                <Avatar/>
+                                <ChatBox chatArrow={"left"}
+                                         chatContent={"123"}/>
+                            </div>
+                            <div className={"fr"}>
+                                <ChatBox chatArrow={"right"}
+                                         chatContent={"123"}/>
+                                <Avatar/>
                             </div>
                         </Card>
                     </Col>
