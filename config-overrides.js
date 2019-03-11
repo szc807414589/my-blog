@@ -1,5 +1,5 @@
 const path = require('path');
-const {injectBabelPlugin} = require('react-app-rewired')
+const {injectBabelPlugin,getBabelLoader} = require('react-app-rewired')
 const rewireLess = require('react-app-rewire-less')
 const { getLessVars } = require('antd-theme-generator');
 
@@ -12,20 +12,19 @@ module.exports = function override(config, env) {
 				libraryName: 'antd',
 				libraryDirectory: 'es',
 				style: true
-			}
+			},
 		],
-		
 		config,
 	)
+	//装饰器
+    config = injectBabelPlugin(['@babel/plugin-proposal-decorators', {legacy: true}], config);
+
+    // config = injectBabelPlugin(['babel-plugin-transform-decorators-legacy', {legacy: true}], config);
+	//手动修改主题色
 	config = rewireLess.withLoaderOptions({
 		modifyVars: getLessVars(path.join(__dirname, './src/styles/vars.less')),
 		javascriptEnabled: true,
 	})(config, env)
 	
-	
-	//外置moment
-	// config.externals = {
-	// 	moment: 'moment'
-	// }
 	return config
 };

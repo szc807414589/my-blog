@@ -106,7 +106,7 @@ const routes = [
                         requiresAuth: false,
                     },
                     {
-                        path: "/chat/chatDetail",
+                        path: "/chat/chatDetail/:fromId?",
                         component: ChatDetail,
                         requiresAuth: false,
                     },

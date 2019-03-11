@@ -14,8 +14,6 @@ class Chat extends Component {
 
     render() {
         const {chatArrow,chatContent} = this.props
-        console.log(this.props)
-        console.log(chatArrow)
         return (
             <div className={"chat_box"}>
                 <div className={"chat_content"}>

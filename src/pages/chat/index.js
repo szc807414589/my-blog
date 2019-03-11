@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { List, Avatar, Card, Button, Skeleton } from "antd";
+import history from '../../history'
 
 const data = [
     {
@@ -34,7 +35,11 @@ export default class Classify extends Component {
                         itemLayout="horizontal"
                         dataSource={data}
                         renderItem={item => (
-                            <List.Item>
+                            <List.Item
+                                onClick={()=>{
+                                    history.push('/chat/chatDetail/'+item.from)
+                                }}
+                            >
                                 <List.Item.Meta
                                     avatar={
                                         <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
